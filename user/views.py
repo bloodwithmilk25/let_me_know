@@ -1,42 +1,47 @@
-from django.http import HttpResponse
-from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
-from django.utils.encoding import force_text
-
-from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_decode
-from django.utils.http import urlsafe_base64_encode
-
-from .models import User
-from .tokens import account_activation_token
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework.generics import GenericAPIView
+from rest_auth.serializers import PasswordResetConfirmSerializer
+from django.views.decorators.debug import sensitive_post_parameters
 
 
-def verify(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_verified = True
-        user.save()
-        login(request, user)
-        return HttpResponse('Activated')
-    else:
-        return HttpResponse('Activation link is invalid!')
+@api_view()
+def null_view(request):
+    """
+    used to handle the url redirection from django-allauth
+    """
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-@login_required
-def resent_email(request):
-    if request.method == 'GET':
-        user = request.user
-        print(user)
-        mail_subject = 'Activate your account.'
-        message = render_to_string('account_activation_email.html', {
-            'user': user,
-            'domain': 'http://localhost:8000',
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-            'token': account_activation_token.make_token(user),
-        })
-        user.email_user(mail_subject, message)
+class PasswordResetConfirmView(GenericAPIView):
+    """
+    Password reset e-mail link is confirmed, therefore
+    this resets the user's password.
+
+    Accepts the following POST parameters: token, uid,
+        new_password1, new_password2
+    Returns the success/fail message.
+    """
+    serializer_class = PasswordResetConfirmSerializer
+    permission_classes = (AllowAny,)
+
+    def dispatch(self, *args, **kwargs):
+        return super(PasswordResetConfirmView, self).dispatch(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(
+            {"detail": "Password has been reset with the new password."})
+
+
+@api_view()
+def complete_view(request):
+    """
+    used to provide the successfully feedback page to end-user
+    once he/she clicks the activation link from email
+    """
+    return Response("Email account is activated")

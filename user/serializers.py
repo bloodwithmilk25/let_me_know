@@ -4,10 +4,10 @@ from .models import User
 
 
 class CustomLoginSerializer(LoginSerializer):
-        def get_fields(self):
-            fields = super(LoginSerializer, self).get_fields()
-            del fields['username']
-            return fields
+    def get_fields(self):
+        fields = super(LoginSerializer, self).get_fields()
+        del fields['username']
+        return fields
 
 
 # class CustomRegisterSerializer(RegisterSerializer):

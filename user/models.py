@@ -56,18 +56,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
 
-def user_post_save(instance, created, *args, **kwargs):
-    # if it's a newly created but not verified user
-    if created and not instance.is_verified:
-        # Send verification email
-        mail_subject = 'Activate your account.'
-        message = render_to_string('account_activation_email.html', {
-            'user': instance,
-            'domain': 'http://localhost:8000',
-            'uid': urlsafe_base64_encode(force_bytes(instance.pk)).decode(),
-            'token': account_activation_token.make_token(instance),
-        })
-        instance.email_user(mail_subject, message)
-
-
-signals.post_save.connect(user_post_save, sender=User)
+# def user_post_save(instance, created, *args, **kwargs):
+#     # if it's a newly created but not verified user
+#     if created and not instance.is_verified:
+#         # Send verification email
+#         mail_subject = 'Activate your account.'
+#         message = render_to_string('account_activation_email.html', {
+#             'user': instance,
+#             'domain': 'http://localhost:8000',
+#             'uid': urlsafe_base64_encode(force_bytes(instance.pk)).decode(),
+#             'token': account_activation_token.make_token(instance),
+#         })
+#         instance.email_user(mail_subject, message)
+#
+#
+# signals.post_save.connect(user_post_save, sender=User)
