@@ -1,24 +1,24 @@
-from django.conf.urls import url, include
+from django.urls import re_path, include
 from .views import CustomConfirmEmailView, FacebookLogin
 from rest_auth.registration.views import (
     SocialAccountListView, SocialAccountDisconnectView
 )
 
 urlpatterns = [
-    url(r'^/', include('rest_auth.urls')),
-    url(r'^registration/account-confirm-email/(?P<key>[-:\w]+)/$', CustomConfirmEmailView.as_view(),
+    re_path(r'^', include('rest_auth.urls')),
+    re_path(r'^registration/account-confirm-email/(?P<key>[-:\w]+)/$', CustomConfirmEmailView.as_view(),
         name='account_confirm_email'),
-    url(r'^registration/', include('rest_auth.registration.urls')),
-    url(r'^facebook/$', FacebookLogin.as_view(), name='fb_login')
+    re_path(r'^registration/$', include('rest_auth.registration.urls')),
+    re_path(r'^facebook/$', FacebookLogin.as_view(), name='fb_login')
 ]
 
 urlpatterns += [
-    url(
+    re_path(
         r'^socialaccounts/$',
         SocialAccountListView.as_view(),
         name='social_account_list'
     ),
-    url(
+    re_path(
         r'^socialaccounts/(?P<pk>\d+)/disconnect/$',
         SocialAccountDisconnectView.as_view(),
         name='social_account_disconnect'

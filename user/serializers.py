@@ -5,15 +5,16 @@ from .models import User
 
 class CustomLoginSerializer(LoginSerializer):
     def get_fields(self):
-        fields = super(LoginSerializer, self).get_fields()
+        fields = super().get_fields()
         del fields['username']
         return fields
 
 
-# class CustomRegisterSerializer(RegisterSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('email', 'password1', 'password2')
+class CustomRegisterSerializer(RegisterSerializer):
+    def get_fields(self):
+        fields = super().get_fields()
+        del fields['username']
+        return fields
 
 
 class CustomUserDetailsSerializer(UserDetailsSerializer):
@@ -21,3 +22,4 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         model = User
         fields = ('id', 'email', 'first_name', 'last_name', 'date_of_birth',
                   'date_joined', 'is_active', 'is_admin', 'is_verified')
+        read_only_fields = ('is_admin', 'id', 'date_joined')
