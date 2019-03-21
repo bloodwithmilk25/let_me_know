@@ -5,21 +5,21 @@ from rest_auth.registration.views import (
 )
 
 urlpatterns = [
-    url(r'^rest-auth/', include('rest_auth.urls')),
-    url(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', CustomConfirmEmailView.as_view(),
+    url(r'^/', include('rest_auth.urls')),
+    url(r'^registration/account-confirm-email/(?P<key>[-:\w]+)/$', CustomConfirmEmailView.as_view(),
         name='account_confirm_email'),
-    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-    url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login')
+    url(r'^registration/', include('rest_auth.registration.urls')),
+    url(r'^facebook/$', FacebookLogin.as_view(), name='fb_login')
 ]
 
 urlpatterns += [
     url(
-        r'^rest-auth/socialaccounts/$',
+        r'^socialaccounts/$',
         SocialAccountListView.as_view(),
         name='social_account_list'
     ),
     url(
-        r'^rest-auth/socialaccounts/(?P<pk>\d+)/disconnect/$',
+        r'^socialaccounts/(?P<pk>\d+)/disconnect/$',
         SocialAccountDisconnectView.as_view(),
         name='social_account_disconnect'
     )

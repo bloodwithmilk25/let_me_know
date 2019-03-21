@@ -19,5 +19,5 @@ class CustomLoginSerializer(LoginSerializer):
 class CustomUserDetailsSerializer(UserDetailsSerializer):
     class Meta:
         model = User
-        fields = ('pk', 'email', 'first_name', 'last_name', 'date_of_birth',
+        fields = ('id', 'email', 'first_name', 'last_name', 'date_of_birth',
                   'date_joined', 'is_active', 'is_admin', 'is_verified')
