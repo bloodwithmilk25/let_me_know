@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     'user',
     'notifications'
 ]
@@ -143,6 +144,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# AUTHENTICATION
+
+LOGIN_REDIRECT_URL = "/"
+
 # email
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -179,3 +184,40 @@ REST_AUTH_SERIALIZERS = {
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'user.serializers.CustomRegisterSerializer'
 }
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    },
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.12',
+    }
+}
+
+SOCIALACCOUNT_ADAPTER = 'user.adapter.SocialAccountAdapter'
+ACCOUNT_ADAPTER = 'user.adapter.AccountAdapter'
+
+#facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '407344769836221'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'a6a813729b22166fa78099e3d6e5120b'

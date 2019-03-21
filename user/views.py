@@ -1,7 +1,5 @@
 from django.shortcuts import redirect
 from allauth.account.views import ConfirmEmailView
-from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from rest_auth.registration.views import SocialLoginView
 
 
 class CustomConfirmEmailView(ConfirmEmailView):
@@ -13,7 +11,3 @@ class CustomConfirmEmailView(ConfirmEmailView):
         confirmation.confirm(self.request)
         super().post(*args, **kwargs)
         return redirect('/')
-
-
-class FacebookLogin(SocialLoginView):
-    adapter_class = FacebookOAuth2Adapter
