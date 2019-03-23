@@ -26,7 +26,7 @@ SECRET_KEY = 'u5g8!^^2y4%e)zi^!+0qqm368*-o+!2@gii+nrd6t%pk0_o)y+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'djcelery',
+    'djcelery_email',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
@@ -144,9 +146,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# AUTHENTICATION
-
-LOGIN_REDIRECT_URL = "/"
+# CELERY
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
 # email
 EMAIL_USE_TLS = True
@@ -154,6 +155,11 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'emailconfiramation@gmail.com'
 EMAIL_HOST_PASSWORD = 'ReVeTaSt0gNe2#'
 EMAIL_PORT = 587
+
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+
+# AUTHENTICATION
+LOGIN_REDIRECT_URL = "/"
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True

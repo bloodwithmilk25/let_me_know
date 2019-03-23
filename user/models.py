@@ -1,14 +1,11 @@
 from django.db import models
-from django.db.models import signals
+from django.dispatch import receiver
+from allauth.account.signals import email_confirmed, user_signed_up
 from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.template.loader import render_to_string
 
 from .managers import UserManager
-from .tokens import account_activation_token
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -55,6 +52,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         return self.is_admin
 
+
+@receiver(email_confirmed)
+def email_confirmed_(request, email_address, **kwargs):
+
+    user = User.objects.get(email=email_address.email)
+    user.is_verified = True
+
+    user.save()
 
 # def user_post_save(instance, created, *args, **kwargs):
 #     # if it's a newly created but not verified user
