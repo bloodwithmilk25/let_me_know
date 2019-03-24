@@ -12,5 +12,5 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'user_api.settings')
-
+os.environ["CELERY_LOADER"] = "django"
 application = get_wsgi_application()

@@ -17,7 +17,7 @@ class MyUserAdmin(UserAdmin):
     list_display = ('email', 'full_name', 'date_joined', 'is_admin', 'is_active')
     list_filter = ('is_admin',)
     fieldsets = (
-        (None, {'fields': ('email', 'password', )}),
+        (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'date_of_birth', 'date_joined')}),
         ('Permissions', {'fields': ('is_admin', 'is_active', 'is_verified', 'groups', 'user_permissions')}),
     )
