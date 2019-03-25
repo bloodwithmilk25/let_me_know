@@ -2,17 +2,26 @@ import logging
 from user_api.celery import app
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from .models import Notification
 
 
-@app.task(bind=True)
-def send_notification(self, instance):
-    logging.warning(self.request.id)
+@app.task
+def send_notification(notf_id):
     try:
+        notification = Notification.objects.get(id=notf_id)
         mail_subject = 'Your notification.'
         message = render_to_string('notify.html', {
-            'title': instance.title,
-            'content': instance.content
+            'title': notification.title,
+            'content': notification.content
         })
-        send_mail(mail_subject, message, recipient_list=[instance.user.email], from_email=None)
-    except instance.DoesNotExist:
-        logging.warning("Notification does not exist anymore")
+        email = notification.user.email
+        try:
+            send_mail(mail_subject, message, recipient_list=[email], from_email=None)
+            Notification.objects.filter(id=notf_id).update(sent=True)
+            return 'Email sent'
+        except Exception as e:
+            logging.warning(f"{e}\nError occurred while sending notification to {email}")
+    except Notification.DoesNotExist:
+        logging.warning('Notification does not exist anymore')
+
+
