@@ -20,8 +20,11 @@ class NotificationsListView(generics.ListAPIView):
     def post(self, request, *args, **kwargs):
         serializer = NotificationSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            # check if user creating notification for himself  # maybe deprecated later
+            new_ntfc_user_id = serializer.validated_data['user'].id
+            if new_ntfc_user_id == self.request.user.id:
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -33,11 +36,23 @@ class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+    # TODO user can only see/edit/delete his notifications
+    # TODO user can only create notifications for himself
+    # TODO patch
+    # TODO post
 
     def get(self, request, *args, **kwargs):
         try:
             notification = self.queryset.get(pk=kwargs["pk"])
-            return Response(NotificationSerializer(notification).data)
+            if self.request.user.id == notification.user_id:
+                return Response(NotificationSerializer(notification).data)
+            return Response(
+                data={
+                    "message": "Your have no access this data"
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         except Notification.DoesNotExist:
             return Response(
                 data={
