@@ -53,8 +53,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
 
+# set is_verified to True on my User model when confirming email with allauth view
+# when email is confirmed trough allauth view, it sends a signal called email_confirmed
+# then we receive it and do some work
 @receiver(email_confirmed)
-def email_confirmed_(request, email_address, **kwargs):
-    user = User.objects.get(email=email_address.email)
-    user.is_verified = True
-    user.save()
+def email_confirmed_(email_address, **kwargs):
+    User.objects.filter(email=email_address.email).update(is_verified=True)
+
