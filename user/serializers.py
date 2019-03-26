@@ -3,6 +3,8 @@ from rest_auth.registration.serializers import RegisterSerializer
 from .models import User
 
 
+# Following serializers needed to change the behavior of rest_auth forms i.e.
+# to delete some fields
 class CustomLoginSerializer(LoginSerializer):
     def get_fields(self):
         fields = super().get_fields()
@@ -22,4 +24,4 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         model = User
         fields = ('id', 'email', 'first_name', 'last_name', 'date_of_birth',
                   'date_joined', 'is_active', 'is_admin', 'is_verified')
-        read_only_fields = ('is_admin', 'id', 'date_joined')
+        read_only_fields = ('is_admin', 'id', 'date_joined', 'is_verified')

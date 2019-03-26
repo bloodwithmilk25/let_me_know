@@ -1,6 +1,6 @@
 from django.db import models
 from django.dispatch import receiver
-from allauth.account.signals import email_confirmed, user_signed_up
+from allauth.account.signals import email_confirmed
 from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -55,24 +55,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 @receiver(email_confirmed)
 def email_confirmed_(request, email_address, **kwargs):
-
     user = User.objects.get(email=email_address.email)
     user.is_verified = True
-
     user.save()
-
-# def user_post_save(instance, created, *args, **kwargs):
-#     # if it's a newly created but not verified user
-#     if created and not instance.is_verified:
-#         # Send verification email
-#         mail_subject = 'Activate your account.'
-#         message = render_to_string('account_activation_email.html', {
-#             'user': instance,
-#             'domain': 'http://localhost:8000',
-#             'uid': urlsafe_base64_encode(force_bytes(instance.pk)).decode(),
-#             'token': account_activation_token.make_token(instance),
-#         })
-#         instance.email_user(mail_subject, message)
-#
-#
-# signals.post_save.connect(user_post_save, sender=User)
