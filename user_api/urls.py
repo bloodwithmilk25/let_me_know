@@ -1,6 +1,7 @@
 from django.contrib import admin
-from django.urls import re_path, include
+from django.urls import path, re_path, include
 from django.views.generic import TemplateView
+from django.conf import settings
 
 urlpatterns = [
     re_path('admin/', admin.site.urls),
@@ -11,3 +12,13 @@ urlpatterns = [
             TemplateView.as_view(template_name='index.html'), name='password_reset_confirm'),
     re_path('^$', TemplateView.as_view(template_name='index.html'), name='home'),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+
+        # For django versions before 2.0:
+        # url(r'^__debug__/', include(debug_toolbar.urls)),
+
+    ] + urlpatterns
