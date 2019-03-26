@@ -53,5 +53,5 @@ class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
     def patch(self, request, *args, **kwargs):
         return self.put_patch(request, *args, **kwargs)
 
-    def p(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         return self.put_patch(request, *args, **kwargs)
