@@ -1,7 +1,15 @@
 from django.db import models
 from django.db.models import signals
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from user_api.celery import app
+from datetime import datetime, timezone
+
+
+def in_future(value):
+    current_time = datetime.now(tz=timezone.utc)
+    if value < current_time:
+        raise ValidationError('notify_on cannot be in the past.')
 
 
 class Notification(models.Model):
@@ -9,12 +17,11 @@ class Notification(models.Model):
     content = models.TextField(blank=True)
     user = models.ForeignKey(get_user_model(), related_name='notifications', on_delete=models.CASCADE)
     celery_task_id = models.CharField(max_length=100, blank=True)
-    notify_on = models.DateTimeField()
+    notify_on = models.DateTimeField(validators=[in_future])
 
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     sent = models.BooleanField(default=False)
-    # TODO add notify_on validation
 
     def __str__(self):
         return self.title if self.title else self.content[:20]
