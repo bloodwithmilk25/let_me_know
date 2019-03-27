@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
+from django.views.decorators.cache import cache_page
 
 from .models import Notification
 from .serializers import NotificationSerializer
@@ -36,9 +37,13 @@ class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
     PATCH Notifications/:id/
     DELETE Notifications/:id/
     """
-    queryset = Notification.objects.all()
+    queryset = Notification.objects.all().select_related('user')
     serializer_class = NotificationSerializer
     permission_classes = (IsOwner,)
+
+    #@cache_page(60)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
     def put_patch(self, request, *args, **kwargs):
         serializer = NotificationSerializer(data=request.data)

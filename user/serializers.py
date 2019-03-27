@@ -24,4 +24,4 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         model = User
         fields = ('id', 'email', 'first_name', 'last_name', 'date_of_birth',
                   'date_joined', 'is_active', 'is_admin', 'is_verified')
-        read_only_fields = ('is_admin', 'id', 'date_joined', 'is_verified')
+        read_only_fields = ('is_admin', 'id', 'date_joined', 'is_verified', 'is_active')

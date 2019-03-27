@@ -21,7 +21,7 @@ class Notification(models.Model):
 
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
-    sent = models.BooleanField(default=False)
+    sent = models.BooleanField(default=False, editable=False)
 
     def __str__(self):
         return self.title if self.title else self.content[:20]
