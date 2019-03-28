@@ -17,11 +17,11 @@ from django.urls import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
 
-STATICFILES_DIRS = (
-    os.path.join(os.path.join(BASE_DIR, 'frontend'), 'public'),
-)
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
 
-REACT_APP = "https://localhost:3000"
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/

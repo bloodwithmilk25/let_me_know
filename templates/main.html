@@ -1,4 +1,4 @@
-{ % load render_bundle from webpack_loader % }
+{% load render_bundle from webpack_loader %}
 
 <!DOCTYPE html>
 <html>
@@ -8,9 +8,7 @@
     <title>Django + React CRUD</title>
   </head>
   <body>
-    <div id="root">
-     This is where React will be mounted
-    </div>
-    { % render_bundle 'index' % }
+    <div id="root">This is where React will be mounted</div>
+    {% render_bundle 'main' %}
   </body>
 </html>
