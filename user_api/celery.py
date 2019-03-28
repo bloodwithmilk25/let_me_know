@@ -15,3 +15,4 @@ if __name__ == '__main__':
     app.start()
 
 # celery -A user_api worker -l info
+# brew services start rabbitmq
