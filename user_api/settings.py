@@ -15,7 +15,13 @@ from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
 
+STATICFILES_DIRS = (
+    os.path.join(os.path.join(BASE_DIR, 'frontend'), 'public'),
+)
+
+REACT_APP = "https://localhost:3000"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -48,10 +54,10 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
 
     'rest_auth',
     'rest_auth.registration',
-
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -59,8 +65,17 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     'user',
-    'notifications'
+    'notifications',
+
+    'webpack_loader',
 ]
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+            'BUNDLE_DIR_NAME': 'bundles/',
+            'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
@@ -82,6 +97,8 @@ CACHES = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -95,12 +112,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'user_api.urls'
 
-TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_ROOT, 'notifications/templates']
+        'DIRS': [TEMPLATES_ROOT, ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -167,6 +182,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# we whitelist localhost:3000 because that's where frontend will be served
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000/'
+)
 
 # CELERY
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
