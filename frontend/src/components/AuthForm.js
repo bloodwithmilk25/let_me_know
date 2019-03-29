@@ -1,7 +1,13 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import { login, fetchUser } from "../actions/auth";
 
 class AuthForm extends React.Component {
+  componentDidMount() {
+    this.props.fetchUser();
+  }
+
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -23,9 +29,9 @@ class AuthForm extends React.Component {
     );
   };
 
-  onSubmit(formValues) {
-    console.log(formValues);
-  }
+  onSubmit = formValues => {
+    this.props.login(formValues);
+  };
 
   render() {
     return (
@@ -53,7 +59,12 @@ const validate = formValues => {
   return errors;
 };
 
-export default reduxForm({
+const formWrapperd = reduxForm({
   form: "auth",
   validate
 })(AuthForm);
+
+export default connect(
+  null,
+  { login, fetchUser }
+)(formWrapperd);

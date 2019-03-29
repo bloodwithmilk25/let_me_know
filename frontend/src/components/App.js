@@ -10,6 +10,7 @@ const App = () => {
       <BrowserRouter>
         <div>
           <Route path="/" exact component={AuthForm} />
+          <Route path="/" exact component={NotificationsList} />
         </div>
       </BrowserRouter>
     </div>
