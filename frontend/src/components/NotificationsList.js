@@ -4,7 +4,11 @@ import { fetchNotifications } from "../actions/notifications";
 
 class NotificationsList extends React.Component {
   componentDidMount() {
-    this.props.fetchNotifications();
+    console.log("!!!");
+    if (this.props.user) {
+      console.log("has user");
+      this.props.fetchNotifications();
+    }
   }
 
   render() {
@@ -12,7 +16,12 @@ class NotificationsList extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  console.log(state);
+  return { user: state.user };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { fetchNotifications }
 )(NotificationsList);

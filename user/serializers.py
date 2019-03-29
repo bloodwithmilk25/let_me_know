@@ -1,5 +1,7 @@
-from rest_auth.serializers import UserDetailsSerializer, LoginSerializer
+from rest_auth.serializers import UserDetailsSerializer, LoginSerializer, TokenSerializer
 from rest_auth.registration.serializers import RegisterSerializer
+from rest_auth.models import TokenModel
+
 from .models import User
 
 
@@ -25,3 +27,15 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         fields = ('id', 'email', 'first_name', 'last_name', 'date_of_birth',
                   'date_joined', 'is_active', 'is_admin', 'is_verified')
         read_only_fields = ('is_admin', 'id', 'date_joined', 'is_verified', 'is_active')
+
+
+class CustomTokenSerializer(TokenSerializer):
+    """
+    Customizing token serializer too return not only token, but user instance too
+    on login.
+    """
+    user = CustomUserDetailsSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = TokenModel
+        fields = ('key', 'user')

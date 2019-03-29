@@ -78,22 +78,10 @@ WEBPACK_LOADER = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
-}
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-    }
 }
 
 MIDDLEWARE = [
@@ -183,11 +171,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# we whitelist localhost:3000 because that's where frontend will be served
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000/'
-)
-
 # CELERY
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
@@ -209,8 +192,6 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-#ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy('account_confirm_complete')
-#ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('account_confirm_complete')
 
 SITE_ID = 2
 
@@ -225,7 +206,8 @@ AUTHENTICATION_BACKENDS = (
 
 REST_AUTH_SERIALIZERS = {
     'LOGIN_SERIALIZER': 'user.serializers.CustomLoginSerializer',
-    'USER_DETAILS_SERIALIZER': 'user.serializers.CustomUserDetailsSerializer'
+    'USER_DETAILS_SERIALIZER': 'user.serializers.CustomUserDetailsSerializer',
+    'TOKEN_SERIALIZER': 'user.serializers.CustomTokenSerializer',
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {

@@ -2,8 +2,8 @@ import authApi from "../api/authApi";
 
 export const login = data => async dispatch => {
   const response = await authApi.post("login/", data);
-  dispatch({ type: "LOGIN", payload: response.data });
-  dispatch(fetchUser());
+
+  dispatch({ type: "LOGIN", payload: response.data.user });
 };
 
 export const logout = () => async dispatch => {
@@ -25,13 +25,13 @@ export const register = data => async dispatch => {
 };
 
 export const changePassword = data => async dispatch => {
-  const response = await authApi.post("password/change/", data);
+  await authApi.post("password/change/", data);
 
   dispatch({ type: "CHANGE_PASSWORD" });
 };
 
 export const resetPassword = data => async dispatch => {
-  const response = await authApi.post("password/reset/", data);
+  authApi.post("password/reset/", data);
 
   dispatch({ type: "RESET_PASSWORD" });
 };
