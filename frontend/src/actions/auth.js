@@ -7,9 +7,9 @@ export const login = data => async dispatch => {
 };
 
 export const logout = () => async dispatch => {
-  const response = await authApi.get("user/");
+  const response = await authApi.post("logout/");
 
-  dispatch({ type: "LOGIN", payload: response.data });
+  dispatch({ type: "LOGOUT" });
 };
 
 export const fetchUser = () => async dispatch => {

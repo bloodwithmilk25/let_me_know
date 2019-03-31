@@ -4,11 +4,11 @@ import { fetchNotifications } from "../actions/notifications";
 
 class NotificationsList extends React.Component {
   componentDidMount() {
-    console.log("!!!");
-    if (this.props.user) {
-      console.log("has user");
-      this.props.fetchNotifications();
-    }
+    this.props.fetchNotifications();
+  }
+
+  componentDidUdate() {
+    this.props.fetchNotifications();
   }
 
   render() {
