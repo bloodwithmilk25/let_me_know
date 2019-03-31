@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { login, fetchUser } from "../actions/auth";
 
 class AuthForm extends React.Component {
-  componentDidMount() {
-    this.props.fetchUser();
-  }
+  // componentDidMount() {
+  //   this.props.fetchUser();
+  // }
 
   renderError({ error, touched }) {
     if (touched && error) {
@@ -59,12 +59,16 @@ const validate = formValues => {
   return errors;
 };
 
+const mapStateToProps = state => {
+  return { user: state.user };
+};
+
 const formWrapperd = reduxForm({
   form: "auth",
   validate
 })(AuthForm);
 
 export default connect(
-  null,
+  mapStateToProps,
   { login, fetchUser }
 )(formWrapperd);
