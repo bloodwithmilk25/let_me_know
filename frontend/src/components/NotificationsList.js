@@ -5,11 +5,31 @@ import { fetchNotifications } from "../actions/notifications";
 class NotificationsList extends React.Component {
   componentDidMount() {
     console.log(this.props.notf);
-    this.props.fetchNotifications();
   }
 
+  renderNotifications = () => {
+    if (this.props.notf.length === 0) {
+      return <h3>You have no notifications yet</h3>;
+    }
+    return this.props.notf.map(n => {
+      return (
+        <div>
+          <h3>{n.title}</h3>
+          <p>{n.content}</p>
+          <p>{n.notify_on}</p>
+        </div>
+      );
+    });
+  };
+
   render() {
-    return <div>Total of {this.props.notf.length} notf</div>;
+    console.log("called");
+    if (this.props.user) {
+      this.props.fetchNotifications();
+      return this.renderNotifications();
+    } else {
+      return "wait";
+    }
   }
 }
 

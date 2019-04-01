@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { login, fetchUser } from "../actions/auth";
 
 class AuthForm extends React.Component {
-  // componentDidMount() {
-  //   this.props.fetchUser();
-  // }
+  componentDidMount() {
+    this.props.fetchUser();
+  }
 
   renderError({ error, touched }) {
     if (touched && error) {
