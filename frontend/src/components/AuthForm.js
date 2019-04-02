@@ -52,10 +52,12 @@ class AuthForm extends React.Component {
     } else {
       return (
         <div>
-          <h1>{this.props.user.email}</h1>;
+          <h1>{this.props.user.email}</h1>
           <button onClick={this.props.sign_out} className="ui button primary">
             Sign Out
           </button>
+          <br />
+          <br />
         </div>
       );
     }

@@ -5,7 +5,7 @@ from .models import Notification
 
 class NotificationSerializer(serializers.ModelSerializer):
 
-    notify_on = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    notify_on = serializers.DateTimeField(format="%Y-%m-%d %H:%M")
 
     class Meta:
         model = Notification

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchNotifications } from "../actions/notifications";
+import NotificationCreate from "./NotificationCreate";
 
 class NotificationsList extends React.Component {
   componentDidUpdate() {
@@ -28,7 +29,12 @@ class NotificationsList extends React.Component {
     if (!this.props.user.isSignedIn) {
       return <h1>Login or sign up to start getting notifications</h1>;
     }
-    return this.renderNotifications();
+    return (
+      <div>
+        <NotificationCreate />
+        {this.renderNotifications()}
+      </div>
+    );
   }
 }
 
