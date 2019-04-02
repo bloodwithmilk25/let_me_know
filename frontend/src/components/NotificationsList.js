@@ -4,7 +4,7 @@ import { fetchNotifications } from "../actions/notifications";
 
 class NotificationsList extends React.Component {
   componentDidUpdate() {
-    if (!this.props.notifications.isFetched && this.props.user) {
+    if (!this.props.notifications.isFetched && this.props.user.isSignedIn) {
       this.props.fetchNotifications();
     }
   }
@@ -25,6 +25,9 @@ class NotificationsList extends React.Component {
   };
 
   render() {
+    if (!this.props.user.isSignedIn) {
+      return <h1>Login or sign up to start getting notifications</h1>;
+    }
     return this.renderNotifications();
   }
 }

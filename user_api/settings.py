@@ -17,12 +17,6 @@ from django.urls import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
 
-REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
-
-STATICFILES_DIRS = [
-    os.path.join(REACT_APP_DIR, 'build', 'static'),
-]
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -66,20 +60,11 @@ INSTALLED_APPS = [
 
     'user',
     'notifications',
-
-    'webpack_loader',
 ]
-
-WEBPACK_LOADER = {
-    'DEFAULT': {
-            'BUNDLE_DIR_NAME': 'bundles/',
-            'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
-        }
-}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
 }
@@ -97,6 +82,8 @@ MIDDLEWARE = [
 
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
+
+MIDDLEWARE.append('user_api.middleware.dev_cors_middleware')
 
 ROOT_URLCONF = 'user_api.urls'
 
