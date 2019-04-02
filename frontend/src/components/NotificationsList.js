@@ -3,15 +3,17 @@ import { connect } from "react-redux";
 import { fetchNotifications } from "../actions/notifications";
 
 class NotificationsList extends React.Component {
-  componentDidMount() {
-    console.log(this.props.notf);
+  componentDidUpdate() {
+    if (!this.props.notifications.isFetched && this.props.user) {
+      this.props.fetchNotifications();
+    }
   }
 
   renderNotifications = () => {
-    if (this.props.notf.length === 0) {
+    if (this.props.notifications.list.length === 0) {
       return <h3>You have no notifications yet</h3>;
     }
-    return this.props.notf.map(n => {
+    return this.props.notifications.list.map(n => {
       return (
         <div>
           <h3>{n.title}</h3>
@@ -23,18 +25,12 @@ class NotificationsList extends React.Component {
   };
 
   render() {
-    console.log("called");
-    if (this.props.user) {
-      this.props.fetchNotifications();
-      return this.renderNotifications();
-    } else {
-      return "wait";
-    }
+    return this.renderNotifications();
   }
 }
 
-const mapStateToProps = state => {
-  return { user: state.user, notf: state.notifications };
+const mapStateToProps = ({ user, notifications }) => {
+  return { user, notifications };
 };
 
 export default connect(
