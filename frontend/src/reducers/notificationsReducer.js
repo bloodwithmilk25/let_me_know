@@ -1,7 +1,7 @@
 import {
   FETCH_NOTIFICATIONS,
   CREATE_NOTIFICATION,
-  EDIT_NOTIFICATION,
+  UPDATE_NOTIFICATION,
   DELETE_NOTIFICATION,
   CLEAR_NOTIFICATIONS
 } from "../actions/types";
@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, list: action.payload, isFetched: true };
     case CREATE_NOTIFICATION:
       return { ...state, list: [...state.list, action.payload] };
-    case EDIT_NOTIFICATION:
+    case UPDATE_NOTIFICATION:
       return {
         ...state,
         list: state.list.map(el =>

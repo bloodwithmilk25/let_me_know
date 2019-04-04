@@ -6,7 +6,6 @@ import "react-widgets/dist/css/react-widgets.css";
 
 momentLocalizer(moment);
 
-let date = new Date();
 export const renderDateTimePicker = ({
   input: { onChange, value },
   showTime
@@ -19,7 +18,6 @@ export const renderDateTimePicker = ({
       time={showTime}
       timeFormat="H:mm"
       step={30}
-      defaultValue={date}
       min={new Date()}
     />
   </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchNotifications } from "../actions/notifications";
 import NotificationCreate from "./NotificationCreate";
+import NotificationCard from "./NotificationCard";
 
 class NotificationsList extends React.Component {
   componentDidUpdate() {
@@ -17,9 +18,13 @@ class NotificationsList extends React.Component {
     return this.props.notifications.list.map(n => {
       return (
         <div>
-          <h3>{n.title}</h3>
-          <p>{n.content}</p>
-          <p>{n.notify_on}</p>
+          <NotificationCard
+            title={n.title}
+            content={n.content}
+            notify_on={n.notify_on}
+            key={n.id}
+            notfId={n.id}
+          />
         </div>
       );
     });

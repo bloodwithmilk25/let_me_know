@@ -2,7 +2,7 @@ import notificationsApi from "../api/notificationsApi";
 import {
   FETCH_NOTIFICATIONS,
   CREATE_NOTIFICATION,
-  EDIT_NOTIFICATION,
+  UPDATE_NOTIFICATION,
   DELETE_NOTIFICATION,
   CLEAR_NOTIFICATIONS
 } from "../actions/types";
@@ -19,10 +19,10 @@ export const createNotification = data => async dispatch => {
   dispatch({ type: CREATE_NOTIFICATION, payload: response.data });
 };
 
-export const editNotification = (id, data) => async dispatch => {
+export const updateNotification = (id, data) => async dispatch => {
   const response = await notificationsApi.patch(`/${id}/`, data);
 
-  dispatch({ type: EDIT_NOTIFICATION, payload: response.data });
+  dispatch({ type: UPDATE_NOTIFICATION, payload: response.data });
 };
 
 export const deleteNotification = id => async dispatch => {
