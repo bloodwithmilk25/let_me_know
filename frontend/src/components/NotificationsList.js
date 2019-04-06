@@ -19,11 +19,9 @@ class NotificationsList extends React.Component {
       return (
         <div>
           <NotificationCard
-            title={n.title}
-            content={n.content}
-            notify_on={n.notify_on}
             key={n.id}
-            notfId={n.id}
+            form={`updateNotification_${n.id}`}
+            initialValues={n}
           />
         </div>
       );

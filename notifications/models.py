@@ -23,6 +23,9 @@ class Notification(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     sent = models.BooleanField(default=False, editable=False)
 
+    class Meta:
+        ordering = ['-date_created']
+
     def __str__(self):
         return self.title if self.title else self.content[:20]
 

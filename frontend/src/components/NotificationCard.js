@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { updateNotification } from "../actions/notifications";
 import { renderDateTimePicker } from "./DateTimePicker";
 
-class AuthForm extends React.Component {
+class NotificationCard extends React.Component {
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -16,12 +16,12 @@ class AuthForm extends React.Component {
     }
   }
 
-  renderInput = ({ input, label, meta, value }) => {
+  renderInput = ({ input, label, meta, disabled }) => {
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
         <label>{label}</label>
-        <input {...input} autoComplete="off" />
+        <input {...input} disabled={disabled} autoComplete="off" />
         {this.renderError(meta)}
       </div>
     );
@@ -38,19 +38,22 @@ class AuthForm extends React.Component {
         className="ui form error"
       >
         <Field
-          name={`title${this.props.notfId}`}
+          name="title"
           component={this.renderInput}
           label="Title"
+          disabled={true}
         />
         <Field
-          name={`content${this.props.notfId}`}
+          name="content"
           component={this.renderInput}
           label="Content"
+          disabled={true}
         />
         <Field
-          name={`notify_on${this.props.notfId}`}
+          name="notify_on"
           component={renderDateTimePicker}
           label="Notify Me On"
+          disabled={true}
         />
         <button className="ui button primary">Update Notification</button>
         <br />
@@ -65,37 +68,16 @@ const validate = formValues => {
   if (!formValues.title) {
     errors.title = "Notification must have a title";
   }
-  // if (!formValues.notify_on) {
-  //   errors.notify_on = "Enter time and date you want to receive notification at";
-  // }
-
   return errors;
-};
-
-const mapStateToProps = (state, ownProps) => {
-  const notfId = ownProps.notfId;
-  const title = "title" + notfId;
-  const content = "content" + notfId;
-  const notify_on = "notify_on" + notfId;
-
-  const xui = {};
-  xui[title] = ownProps.title;
-  xui[content] = ownProps.content;
-  xui[notify_on] = ownProps.notify_on;
-  console.log(xui);
-  return {
-    initialValues: { ...state.initialValues, ...xui }
-  };
 };
 
 // adding redux form
 const formWrapperd = reduxForm({
-  form: "updateNotification",
   validate
-})(AuthForm);
+})(NotificationCard);
 
 // and then adding connect
 export default connect(
-  mapStateToProps,
+  null,
   { updateNotification }
 )(formWrapperd);

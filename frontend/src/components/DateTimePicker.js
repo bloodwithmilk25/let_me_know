@@ -5,20 +5,24 @@ import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import "react-widgets/dist/css/react-widgets.css";
 
 momentLocalizer(moment);
-
 export const renderDateTimePicker = ({
-  input: { onChange, value },
+  props,
+  input: { onChange, value, disabled },
   showTime
-}) => (
-  <div>
-    <DateTimePicker
-      onChange={onChange}
-      editFormat="MMM D, Y H:mm"
-      format="MMM D, Y H:mm"
-      time={showTime}
-      timeFormat="H:mm"
-      step={30}
-      min={new Date()}
-    />
-  </div>
-);
+}) => {
+  console.log(props.disabled);
+  return (
+    <div>
+      <DateTimePicker
+        onChange={onChange}
+        editFormat="MMM D, Y H:mm"
+        format="MMM D, Y H:mm"
+        time={showTime}
+        timeFormat="H:mm"
+        value={!value ? null : new Date(value)}
+        step={30}
+        min={new Date()}
+      />
+    </div>
+  );
+};

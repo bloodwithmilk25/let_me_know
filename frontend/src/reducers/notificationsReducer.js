@@ -8,7 +8,8 @@ import {
 
 const INITIAL_STATE = {
   list: [],
-  isFetched: false
+  isFetched: false,
+  isUnderEdit: false
 };
 
 export default (state = INITIAL_STATE, action) => {
