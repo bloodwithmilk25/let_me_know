@@ -2,10 +2,20 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 
-import { updateNotification } from "../actions/notifications";
+import {
+  updateNotification,
+  putOnEdit,
+  closeEdit
+} from "../actions/notifications";
 import { renderDateTimePicker } from "./DateTimePicker";
 
 class NotificationCard extends React.Component {
+  state = { isUnderEdit: false };
+
+  componentDidUpdate() {
+    // TODO
+  }
+
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -27,35 +37,57 @@ class NotificationCard extends React.Component {
     );
   };
 
-  onSubmit = formValues => {
-    this.props.updateNotification(formValues);
+  onClickEditOpen = e => {
+    // TODO
+  };
+
+  editOrDoneButton = () => {
+    if (!this.state.isUnderEdit) {
+      return (
+        <div>
+          <button
+            onClick={e => this.onClickEditOpen(e)}
+            className="ui button red"
+          >
+            Edit
+          </button>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <button
+          onClick={e => this.onClickEditOpen(e)}
+          className="ui button green"
+        >
+          Done
+        </button>
+      </div>
+    );
   };
 
   render() {
     return (
-      <form
-        onSubmit={this.props.handleSubmit(this.onSubmit)}
-        className="ui form error"
-      >
+      <form className="ui form error">
         <Field
           name="title"
           component={this.renderInput}
           label="Title"
-          disabled={true}
+          disabled={!this.state.isUnderEdit}
         />
         <Field
           name="content"
           component={this.renderInput}
           label="Content"
-          disabled={true}
+          disabled={!this.state.isUnderEdit}
         />
         <Field
           name="notify_on"
           component={renderDateTimePicker}
           label="Notify Me On"
-          disabled={true}
+          disabled={!this.state.isUnderEdit}
         />
-        <button className="ui button primary">Update Notification</button>
+        {this.editOrDoneButton()}
         <br />
         <br />
       </form>
@@ -78,6 +110,6 @@ const formWrapperd = reduxForm({
 
 // and then adding connect
 export default connect(
-  null,
-  { updateNotification }
+  state => ({ notfUnderEdit: state.notifications.notfUnderEdit }),
+  { updateNotification, putOnEdit, closeEdit }
 )(formWrapperd);

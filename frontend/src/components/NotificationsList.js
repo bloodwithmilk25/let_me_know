@@ -22,6 +22,7 @@ class NotificationsList extends React.Component {
             key={n.id}
             form={`updateNotification_${n.id}`}
             initialValues={n}
+            notfId={n.id}
           />
         </div>
       );

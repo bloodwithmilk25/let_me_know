@@ -4,7 +4,9 @@ import {
   CREATE_NOTIFICATION,
   UPDATE_NOTIFICATION,
   DELETE_NOTIFICATION,
-  CLEAR_NOTIFICATIONS
+  CLEAR_NOTIFICATIONS,
+  PUT_ON_EDIT,
+  CLOSE_EDIT
 } from "../actions/types";
 
 export const fetchNotifications = () => async dispatch => {
@@ -33,4 +35,11 @@ export const deleteNotification = id => async dispatch => {
 
 export const clearNotifications = () => {
   return { type: CLEAR_NOTIFICATIONS };
+};
+
+export const putOnEdit = id => {
+  return { type: PUT_ON_EDIT, payload: id };
+};
+export const closeEdit = () => {
+  return { type: CLOSE_EDIT };
 };

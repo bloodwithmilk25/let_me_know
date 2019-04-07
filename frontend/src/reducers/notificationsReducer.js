@@ -3,13 +3,15 @@ import {
   CREATE_NOTIFICATION,
   UPDATE_NOTIFICATION,
   DELETE_NOTIFICATION,
-  CLEAR_NOTIFICATIONS
+  CLEAR_NOTIFICATIONS,
+  PUT_ON_EDIT,
+  CLOSE_EDIT
 } from "../actions/types";
 
 const INITIAL_STATE = {
   list: [],
   isFetched: false,
-  isUnderEdit: false
+  notfUnderEdit: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -30,6 +32,10 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         list: state.list.filter(el => el.id !== action.payload.id)
       };
+    case PUT_ON_EDIT:
+      return { ...state, notfUnderEdit: action.payload };
+    case CLOSE_EDIT:
+      return { ...state, notfUnderEdit: null };
     // handle case when user signes off
     case CLEAR_NOTIFICATIONS:
       return INITIAL_STATE;

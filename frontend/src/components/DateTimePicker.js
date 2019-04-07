@@ -6,11 +6,10 @@ import "react-widgets/dist/css/react-widgets.css";
 
 momentLocalizer(moment);
 export const renderDateTimePicker = ({
-  props,
-  input: { onChange, value, disabled },
-  showTime
+  input: { onChange, value },
+  showTime,
+  disabled
 }) => {
-  console.log(props.disabled);
   return (
     <div>
       <DateTimePicker
@@ -22,6 +21,7 @@ export const renderDateTimePicker = ({
         value={!value ? null : new Date(value)}
         step={30}
         min={new Date()}
+        disabled={disabled}
       />
     </div>
   );
