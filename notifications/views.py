@@ -45,10 +45,11 @@ class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
-    def put_patch(self, request, *args, **kwargs):
-        serializer = NotificationSerializer(data=request.data)
+    def put_patch(self, request, pk, *args, **kwargs):
+        notification = Notification.objects.get(pk=pk)
+        serializer = NotificationSerializer(notification,data=request.data, partial=True)
         if serializer.is_valid():
-            # check if user creating notification for himself  # maybe deprecated later
+            # check if user edits his notification
             new_ntfc_user_id = serializer.validated_data['user'].id
             if new_ntfc_user_id == self.request.user.id:
                 serializer.save()

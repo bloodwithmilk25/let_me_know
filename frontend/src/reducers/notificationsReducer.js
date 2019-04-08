@@ -28,10 +28,14 @@ export default (state = INITIAL_STATE, action) => {
         )
       };
     case DELETE_NOTIFICATION:
-      return {
-        ...state,
-        list: state.list.filter(el => el.id !== action.payload.id)
-      };
+      if (action.payload.status === 204) {
+        console.log(action.payload);
+        return {
+          ...state,
+          list: state.list.filter(el => el.id !== action.id)
+        };
+      }
+      return state;
     case PUT_ON_EDIT:
       return { ...state, notfUnderEdit: action.payload };
     case CLOSE_EDIT:

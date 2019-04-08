@@ -2,6 +2,8 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 
+import Button from "@material-ui/core/Button";
+
 import { createNotification } from "../actions/notifications";
 import { renderDateTimePicker } from "./DateTimePicker";
 
@@ -28,6 +30,7 @@ class NotificationForm extends React.Component {
   };
 
   onSubmit = formValues => {
+    console.log(formValues.notify_on);
     this.props.createNotification({
       ...formValues,
       user: this.props.user.id
@@ -47,7 +50,9 @@ class NotificationForm extends React.Component {
           component={renderDateTimePicker}
           label="Notify Me On"
         />
-        <button className="ui button primary">New Notification</button>
+        <Button variant="contained" color="primary" type="submit">
+          New Notification
+        </Button>
         <br />
         <br />
       </form>

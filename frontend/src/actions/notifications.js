@@ -30,7 +30,7 @@ export const updateNotification = (id, data) => async dispatch => {
 export const deleteNotification = id => async dispatch => {
   const response = await notificationsApi.delete(`/${id}`);
 
-  dispatch({ type: DELETE_NOTIFICATION, payload: response.data });
+  dispatch({ type: DELETE_NOTIFICATION, payload: response, id });
 };
 
 export const clearNotifications = () => {
