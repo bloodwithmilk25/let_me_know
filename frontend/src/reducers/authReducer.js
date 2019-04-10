@@ -14,13 +14,13 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SIGN_IN:
-      return { ...state, ...action.payload, isSignedIn: true };
+      return { ...action.payload, isSignedIn: true };
     case SIGN_OUT:
       return { isSignedIn: false };
     case FETCH_USER:
       return { ...state, ...action.payload, isSignedIn: true };
     case REGISTER:
-      return action.payload;
+      return { ...action.payload.user, isSignedIn: true };
     case CHANGE_PASSWORD:
       return state;
     case RESET_PASSWORD:

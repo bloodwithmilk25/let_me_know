@@ -45,3 +45,8 @@ export const resetPassword = data => async dispatch => {
 
   dispatch({ type: RESET_PASSWORD });
 };
+export const confrimResetPassword = data => async dispatch => {
+  authApi.post("password/reset/confirm", data);
+
+  dispatch({ type: RESET_PASSWORD });
+};

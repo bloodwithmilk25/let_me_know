@@ -19,7 +19,7 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_NOTIFICATIONS:
       return { ...state, list: action.payload, isFetched: true };
     case CREATE_NOTIFICATION:
-      return { ...state, list: [...state.list, action.payload] };
+      return { ...state, list: [action.payload, ...state.list] };
     case UPDATE_NOTIFICATION:
       return {
         ...state,
@@ -29,7 +29,6 @@ export default (state = INITIAL_STATE, action) => {
       };
     case DELETE_NOTIFICATION:
       if (action.payload.status === 204) {
-        console.log(action.payload);
         return {
           ...state,
           list: state.list.filter(el => el.id !== action.id)

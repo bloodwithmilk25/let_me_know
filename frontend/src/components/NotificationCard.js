@@ -16,6 +16,7 @@ class NotificationCard extends React.Component {
   state = { isUnderEdit: false };
 
   componentDidUpdate() {
+    this.props.initialize(this.props.initialValues);
     if (
       this.props.notfUnderEdit !== this.props.notfId &&
       this.state.isUnderEdit
@@ -104,6 +105,7 @@ class NotificationCard extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <form
         onSubmit={this.props.handleSubmit(this.onClickEditOpen)}
@@ -153,6 +155,8 @@ const formWrapperd = reduxForm({
 
 // and then adding connect
 export default connect(
-  state => ({ notfUnderEdit: state.notifications.notfUnderEdit }),
+  state => ({
+    notfUnderEdit: state.notifications.notfUnderEdit
+  }),
   { updateNotification, deleteNotification, putOnEdit, closeEdit }
 )(formWrapperd);

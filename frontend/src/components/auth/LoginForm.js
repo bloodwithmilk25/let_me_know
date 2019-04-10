@@ -1,13 +1,17 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { sign_in, sign_out, fetchUser } from "../actions/auth";
 
-class AuthForm extends React.Component {
-  componentDidMount() {
-    this.props.fetchUser();
+import { sign_in } from "../../actions/auth";
+import Modal from "../Modal";
+import ResetPasswordForm from "./ResetPasswordForm";
+
+class LoginForm extends React.Component {
+  state = { showResetModal: false };
+
+  onToggleResetModal() {
+    this.setState({ showResetModal: !this.state.showResetModal });
   }
-
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -34,8 +38,8 @@ class AuthForm extends React.Component {
   };
 
   render() {
-    if (!this.props.user.isSignedIn) {
-      return (
+    return (
+      <>
         <form
           onSubmit={this.props.handleSubmit(this.onSubmit)}
           className="ui form error"
@@ -48,19 +52,22 @@ class AuthForm extends React.Component {
           />
           <button className="ui button primary">Login</button>
         </form>
-      );
-    } else {
-      return (
-        <div>
-          <h1>{this.props.user.email}</h1>
-          <button onClick={this.props.sign_out} className="ui button primary">
-            Sign Out
-          </button>
-          <br />
-          <br />
-        </div>
-      );
-    }
+        <p>Forgot Password?</p>
+        <button
+          onClick={() => this.onToggleResetModal()}
+          type="button"
+          className="ui button primary"
+        >
+          Reset Password
+        </button>
+
+        {this.state.showResetModal && (
+          <Modal onCloseRequest={() => this.onToggleResetModal()}>
+            <ResetPasswordForm />
+          </Modal>
+        )}
+      </>
+    );
   }
 }
 
@@ -76,18 +83,14 @@ const validate = formValues => {
   return errors;
 };
 
-const mapStateToProps = ({ user }) => {
-  return { user };
-};
-
 // adding redux form
 const formWrapperd = reduxForm({
-  form: "auth",
+  form: "login",
   validate
-})(AuthForm);
+})(LoginForm);
 
 // and then adding connect
 export default connect(
-  mapStateToProps,
-  { sign_in, sign_out, fetchUser }
+  null,
+  { sign_in }
 )(formWrapperd);
