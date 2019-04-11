@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { register } from "../../actions/auth";
+import { confrimResetPassword } from "../../actions/auth";
 
 class RegistrationForm extends React.Component {
   renderError({ error, touched }) {
@@ -19,14 +19,16 @@ class RegistrationForm extends React.Component {
     return (
       <div className={className}>
         <label>{label}</label>
-        <input {...input} autoComplete="off" />
+        <input {...input} type="password" autoComplete="off" />
         {this.renderError(meta)}
       </div>
     );
   };
 
   onSubmit = formValues => {
-    this.props.register(formValues);
+    const { uid, token } = this.props.match.params;
+    console.log({ ...formValues, uid, token });
+    this.props.confrimResetPassword({ ...formValues, uid, token });
   };
 
   render() {
@@ -36,18 +38,12 @@ class RegistrationForm extends React.Component {
         className="ui form error"
       >
         <Field
-          name="first_name"
-          component={this.renderInput}
-          label="How would like to be called?"
-        />
-        <Field name="email" component={this.renderInput} label="Email*" />
-        <Field
-          name="password1"
+          name="new_password1"
           component={this.renderInput}
           label="Password*"
         />
         <Field
-          name="password2"
+          name="new_password2"
           component={this.renderInput}
           label="Repeat Password*"
         />
@@ -59,16 +55,10 @@ class RegistrationForm extends React.Component {
 
 const validate = formValues => {
   const errors = {};
-  if (!formValues.email) {
-    errors.email = "You must enter an email";
-  }
-  if (!formValues.password1) {
-    errors.password = "You must enter a password";
-  }
-  if (formValues.password1 !== formValues.password2) {
+  if (formValues.new_password1 !== formValues.new_password2) {
     const message = "Your passwords does not match";
-    errors.password1 = message;
-    errors.password2 = message;
+    errors.new_password1 = message;
+    errors.new_password2 = message;
   }
 
   return errors;
@@ -76,12 +66,12 @@ const validate = formValues => {
 
 // adding redux form
 const formWrapperd = reduxForm({
-  form: "registration",
+  form: "resetPasswordConfirm",
   validate
 })(RegistrationForm);
 
 // and then adding connect
 export default connect(
   null,
-  { register }
+  { confrimResetPassword }
 )(formWrapperd);

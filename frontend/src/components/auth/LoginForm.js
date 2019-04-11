@@ -2,7 +2,7 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 
-import { sign_in } from "../../actions/auth";
+import { signIn } from "../../actions/auth";
 import Modal from "../Modal";
 import ResetPasswordForm from "./ResetPasswordForm";
 
@@ -12,6 +12,7 @@ class LoginForm extends React.Component {
   onToggleResetModal() {
     this.setState({ showResetModal: !this.state.showResetModal });
   }
+
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -27,17 +28,21 @@ class LoginForm extends React.Component {
     return (
       <div className={className}>
         <label>{label}</label>
-        <input {...input} autoComplete="off" />
+        <input {...input} />
         {this.renderError(meta)}
       </div>
     );
   };
 
   onSubmit = formValues => {
-    this.props.sign_in(formValues);
+    this.props.signIn(formValues);
   };
 
   render() {
+    console.log(this.props);
+    if (this.props.error) {
+      return <h1>{this.props.error}</h1>;
+    }
     return (
       <>
         <form
@@ -83,6 +88,10 @@ const validate = formValues => {
   return errors;
 };
 
+const mapStateToProps = state => {
+  return { error: state.user.error };
+};
+
 // adding redux form
 const formWrapperd = reduxForm({
   form: "login",
@@ -91,6 +100,6 @@ const formWrapperd = reduxForm({
 
 // and then adding connect
 export default connect(
-  null,
-  { sign_in }
+  mapStateToProps,
+  { signIn }
 )(formWrapperd);

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { sign_out, fetchUser } from "../../actions/auth";
+import { signOut, fetchUser } from "../../actions/auth";
 
 import LoginForm from "./LoginForm";
 import RegistrationForm from "./RegistrationForm";
@@ -22,7 +22,7 @@ class Auth extends React.Component {
   }
 
   onSignOut = () => {
-    this.props.sign_out();
+    this.props.signOut();
     this.setState({ showLoginModal: false, showRegisterModal: false });
   };
 
@@ -78,5 +78,5 @@ const mapStateToProps = ({ user }) => {
 
 export default connect(
   mapStateToProps,
-  { sign_out, fetchUser }
+  { signOut, fetchUser }
 )(Auth);

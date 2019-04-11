@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.3",
+    "await-to-js": "^2.1.1",
     "axios": "^0.18.0",
     "cldr": "^5.0.1",
     "cldr-data": "^34.0.0",

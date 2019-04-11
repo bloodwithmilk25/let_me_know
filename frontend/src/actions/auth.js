@@ -1,4 +1,5 @@
 import authApi from "../api/authApi";
+import to from "await-to-js";
 import {
   SIGN_IN,
   SIGN_OUT,
@@ -8,14 +9,19 @@ import {
   RESET_PASSWORD,
   CLEAR_NOTIFICATIONS
 } from "./types";
+import history from "../history";
 
-export const sign_in = data => async dispatch => {
-  const response = await authApi.post("login/", data);
+export const signIn = data => async dispatch => {
+  let error, response;
+  [error, response] = await to(authApi.post("login/", data));
 
-  dispatch({ type: SIGN_IN, payload: response.data.user });
+  dispatch({
+    type: SIGN_IN,
+    payload: response ? response : error.response
+  });
 };
 
-export const sign_out = () => dispatch => {
+export const signOut = () => dispatch => {
   authApi.post("logout/");
 
   dispatch({ type: SIGN_OUT });
@@ -44,9 +50,11 @@ export const resetPassword = data => async dispatch => {
   authApi.post("password/reset/", data);
 
   dispatch({ type: RESET_PASSWORD });
+  history.push("/email-was-sent");
 };
 export const confrimResetPassword = data => async dispatch => {
-  authApi.post("password/reset/confirm", data);
+  authApi.post("password/reset/confirm/", data);
 
   dispatch({ type: RESET_PASSWORD });
+  history.push("/");
 };

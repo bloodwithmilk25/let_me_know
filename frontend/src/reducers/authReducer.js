@@ -8,13 +8,21 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  isSignedIn: false
+  isSignedIn: false,
+  error: null
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SIGN_IN:
-      return { ...action.payload, isSignedIn: true };
+      if (action.payload.status !== 200) {
+        return {
+          ...state,
+          error: action.payload.data.non_field_errors,
+          isSignedIn: false
+        };
+      }
+      return { ...action.payload.data.user, isSignedIn: true };
     case SIGN_OUT:
       return { isSignedIn: false };
     case FETCH_USER:

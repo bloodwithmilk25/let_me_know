@@ -27,7 +27,7 @@ class Header extends React.Component {
         <AppBar className={classes.navbar} position="sticky">
           <Toolbar>
             <Typography variant="h6" color="inherit">
-              Notify.me
+              <Link to="/">Notify.me</Link>
             </Typography>
           </Toolbar>
         </AppBar>
