@@ -9,8 +9,11 @@ import {
   CLOSE_EDIT
 } from "../actions/types";
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 export const fetchNotifications = () => async dispatch => {
   const response = await notificationsApi.get("/");
+  await delay(400); // delay make user experience smoother
 
   dispatch({ type: FETCH_NOTIFICATIONS, payload: response.data });
 };

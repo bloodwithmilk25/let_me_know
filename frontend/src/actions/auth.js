@@ -7,7 +7,8 @@ import {
   REGISTER,
   CHANGE_PASSWORD,
   RESET_PASSWORD,
-  CLEAR_NOTIFICATIONS
+  CLEAR_NOTIFICATIONS,
+  CLEAR_ERRORS
 } from "./types";
 import history from "../history";
 
@@ -35,9 +36,13 @@ export const fetchUser = () => async dispatch => {
 };
 
 export const register = data => async dispatch => {
-  const response = await authApi.post("registration/", data);
+  let error, response;
+  [error, response] = await to(authApi.post("registration/", data));
 
-  dispatch({ type: REGISTER, payload: response.data });
+  dispatch({
+    type: REGISTER,
+    payload: response ? response : error.response
+  });
 };
 
 export const changePassword = data => async dispatch => {
@@ -57,4 +62,8 @@ export const confrimResetPassword = data => async dispatch => {
 
   dispatch({ type: RESET_PASSWORD });
   history.push("/");
+};
+
+export const clearErrors = () => {
+  return { type: CLEAR_ERRORS };
 };

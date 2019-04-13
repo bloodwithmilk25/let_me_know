@@ -39,10 +39,7 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    console.log(this.props);
-    if (this.props.error) {
-      return <h1>{this.props.error}</h1>;
-    }
+    console.log(this.props.user);
     return (
       <>
         <form
@@ -57,6 +54,14 @@ class LoginForm extends React.Component {
           />
           <button className="ui button primary">Login</button>
         </form>
+        {this.props.errors.length > 0 &&
+          this.props.errors.map(e => {
+            return (
+              <div className="ui error message">
+                <div className="header">{e}</div>
+              </div>
+            );
+          })}
         <p>Forgot Password?</p>
         <button
           onClick={() => this.onToggleResetModal()}
@@ -88,8 +93,12 @@ const validate = formValues => {
   return errors;
 };
 
-const mapStateToProps = state => {
-  return { error: state.user.error };
+const mapStateToProps = ({ user }) => {
+  const errors = [];
+  for (var key in user.errors) {
+    user.errors[key].map(e => errors.push(e));
+  }
+  return { errors };
 };
 
 // adding redux form

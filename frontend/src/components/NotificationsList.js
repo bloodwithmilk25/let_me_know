@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchNotifications } from "../actions/notifications";
 import NotificationCreate from "./NotificationCreate";
 import NotificationCard from "./NotificationCard";
+import Loader from "react-loader-spinner";
 
 class NotificationsList extends React.Component {
   componentDidUpdate() {
@@ -32,6 +33,17 @@ class NotificationsList extends React.Component {
   render() {
     if (!this.props.user.isSignedIn) {
       return <h1>Login or sign up to start getting notifications</h1>;
+    }
+    if (this.props.user.isSignedIn && !this.props.notifications.isFetched) {
+      return (
+        <div class="ui three column grid">
+          <div class="column" />
+          <div class="column">
+            <Loader type="Puff" color="#f50057" height={250} width={250} />
+          </div>
+          <div class="column" />
+        </div>
+      );
     }
     return (
       <div>

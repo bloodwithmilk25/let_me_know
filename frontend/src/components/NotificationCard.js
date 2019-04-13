@@ -54,10 +54,9 @@ class NotificationCard extends React.Component {
       this.setState({ isUnderEdit: true });
     } // click to finish edit
     else if (this.state.isUnderEdit) {
+      this.props.updateNotification(this.props.notfId, formValues);
       this.props.closeEdit();
       this.setState({ isUnderEdit: false });
-      console.log(formValues.notify_on);
-      this.props.updateNotification(this.props.notfId, formValues);
     }
   };
 

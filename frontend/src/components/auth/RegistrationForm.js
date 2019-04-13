@@ -31,28 +31,38 @@ class RegistrationForm extends React.Component {
 
   render() {
     return (
-      <form
-        onSubmit={this.props.handleSubmit(this.onSubmit)}
-        className="ui form error"
-      >
-        <Field
-          name="first_name"
-          component={this.renderInput}
-          label="How would like to be called?"
-        />
-        <Field name="email" component={this.renderInput} label="Email*" />
-        <Field
-          name="password1"
-          component={this.renderInput}
-          label="Password*"
-        />
-        <Field
-          name="password2"
-          component={this.renderInput}
-          label="Repeat Password*"
-        />
-        <button className="ui button primary">Confirm</button>
-      </form>
+      <>
+        <form
+          onSubmit={this.props.handleSubmit(this.onSubmit)}
+          className="ui form error"
+        >
+          <Field
+            name="first_name"
+            component={this.renderInput}
+            label="How would like to be called?"
+          />
+          <Field name="email" component={this.renderInput} label="Email*" />
+          <Field
+            name="password1"
+            component={this.renderInput}
+            label="Password*"
+          />
+          <Field
+            name="password2"
+            component={this.renderInput}
+            label="Repeat Password*"
+          />
+          <button className="ui button primary">Confirm</button>
+        </form>
+        {this.props.errors.length > 0 &&
+          this.props.errors.map(e => {
+            return (
+              <div className="ui error message">
+                <div className="header">{e}</div>
+              </div>
+            );
+          })}
+      </>
     );
   }
 }
@@ -74,6 +84,14 @@ const validate = formValues => {
   return errors;
 };
 
+const mapStateToProps = ({ user }) => {
+  const errors = [];
+  for (var key in user.errors) {
+    user.errors[key].map(e => errors.push(e));
+  }
+  return { errors };
+};
+
 // adding redux form
 const formWrapperd = reduxForm({
   form: "registration",
@@ -82,6 +100,6 @@ const formWrapperd = reduxForm({
 
 // and then adding connect
 export default connect(
-  null,
+  mapStateToProps,
   { register }
 )(formWrapperd);

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import injectSheet from "react-jss";
 import isNil from "lodash/fp/isNil";
 import styles from "./ModalStyles"; // Import styles
+import { clearErrors } from "../actions/auth";
 
 // Declaration of the component as React Class Component
 class Modal extends Component {
@@ -23,6 +25,7 @@ class Modal extends Component {
   componentWillUnmount() {
     window.removeEventListener("keyup", this.handleKeyUp, false);
     document.removeEventListener("click", this.handleOutsideClick, false);
+    this.props.clearErrors();
   }
 
   // Handle the key press event.
@@ -68,4 +71,9 @@ class Modal extends Component {
 }
 
 // Export the component to use it in other components.
-export default injectSheet(styles)(Modal);
+const styledModal = injectSheet(styles)(Modal);
+
+export default connect(
+  null,
+  { clearErrors }
+)(styledModal);

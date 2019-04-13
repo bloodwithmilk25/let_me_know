@@ -30,7 +30,6 @@ class NotificationForm extends React.Component {
   };
 
   onSubmit = formValues => {
-    console.log(formValues.notify_on);
     this.props.createNotification({
       ...formValues,
       user: this.props.user.id
