@@ -2,6 +2,7 @@ import {
   SIGN_IN,
   SIGN_OUT,
   FETCH_USER,
+  UPDATE_USER,
   REGISTER,
   CHANGE_PASSWORD,
   RESET_PASSWORD,
@@ -28,6 +29,16 @@ export default (state = INITIAL_STATE, action) => {
       return { isSignedIn: false };
     case FETCH_USER:
       return { ...state, ...action.payload, isSignedIn: true };
+
+    case UPDATE_USER:
+      console.log(action.payload);
+      if (action.payload.status !== 200) {
+        return {
+          ...state,
+          errors: action.payload.data
+        };
+      }
+      return { ...action.payload.data, isSignedIn: true };
 
     case REGISTER:
       if (action.payload.status !== 201) {

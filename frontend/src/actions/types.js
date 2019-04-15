@@ -1,6 +1,7 @@
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
 export const FETCH_USER = "FETCH_USER";
+export const UPDATE_USER = "UPDATE_USER";
 export const REGISTER = "REGISTER";
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
 export const RESET_PASSWORD = "RESET_PASSWORD";
