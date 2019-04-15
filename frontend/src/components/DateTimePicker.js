@@ -8,21 +8,21 @@ momentLocalizer(moment);
 export const renderDateTimePicker = ({
   input: { onChange, value },
   showTime,
-  disabled
-}) => {
-  return (
-    <div>
-      <DateTimePicker
-        onChange={onChange}
-        editFormat="MMM D, Y H:mm"
-        format="MMM D, Y H:mm"
-        time={showTime}
-        timeFormat="H:mm"
-        value={!value ? null : new Date(value)}
-        step={30}
-        min={new Date()}
-        disabled={disabled}
-      />
-    </div>
-  );
-};
+  disabled,
+  Format,
+  editFormat
+}) => (
+  <div>
+    <DateTimePicker
+      onChange={onChange}
+      editFormat={editFormat ? editFormat : "MMM D, Y H:mm"}
+      format={Format ? Format : "MMM D, Y H:mm"}
+      time={showTime}
+      timeFormat="H:mm"
+      value={!value ? null : new Date(value)}
+      step={30}
+      min={new Date()}
+      disabled={disabled}
+    />
+  </div>
+);

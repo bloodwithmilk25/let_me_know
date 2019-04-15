@@ -1,6 +1,7 @@
 from rest_auth.serializers import UserDetailsSerializer, LoginSerializer, TokenSerializer
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_auth.models import TokenModel
+from rest_framework import serializers
 
 from .models import User
 
@@ -22,6 +23,8 @@ class CustomRegisterSerializer(RegisterSerializer):
 
 
 class CustomUserDetailsSerializer(UserDetailsSerializer):
+    # date_of_birth = serializers.DateField(input_formats=["%b %d, %Y"])  # Apr 05, 2019
+
     class Meta:
         model = User
         fields = ('id', 'email', 'first_name', 'last_name', 'date_of_birth',

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { signOut, fetchUser } from "../../actions/auth";
+import { Link } from "react-router-dom";
 
 import LoginForm from "./LoginForm";
 import RegistrationForm from "./RegistrationForm";
@@ -61,6 +62,7 @@ class Auth extends React.Component {
       return (
         <div>
           <h1>{this.props.user.email}</h1>
+          <Link to="/update-user">Update profile</Link>
           <button onClick={this.onSignOut} className="ui button primary">
             Sign Out
           </button>

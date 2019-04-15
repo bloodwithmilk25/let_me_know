@@ -4,6 +4,7 @@ import NotificationsList from "./NotificationsList";
 import Header from "./Header";
 import Auth from "./auth/Auth";
 import ResetPasswordConfirmForm from "./auth/ResetPasswordConfirmForm";
+import UpdateUserForm from "./auth/UpdateUserForm";
 import DisplayMessage from "./auth/DisplayMessage";
 import history from "../history";
 
@@ -15,6 +16,7 @@ const App = () => {
         <div className="ui container">
           <Route path="/" exact component={Auth} />
           <Route path="/" exact component={NotificationsList} />
+          <Route path="/update-user" exact component={UpdateUserForm} />
           <Route path="/email-was-sent" exact component={DisplayMessage} />
           <Route
             path="/password-reset/:uid/:token"

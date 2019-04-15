@@ -4,6 +4,7 @@ import {
   SIGN_IN,
   SIGN_OUT,
   FETCH_USER,
+  UPDATE_USER,
   REGISTER,
   CHANGE_PASSWORD,
   RESET_PASSWORD,
@@ -33,6 +34,16 @@ export const fetchUser = () => async dispatch => {
   const response = await authApi.get("user/");
 
   dispatch({ type: FETCH_USER, payload: response.data });
+};
+
+export const updateUser = data => async dispatch => {
+  let error, response;
+  [error, response] = await to(authApi.patch("user/", data));
+
+  dispatch({
+    type: UPDATE_USER,
+    payload: response ? response : error.response
+  });
 };
 
 export const register = data => async dispatch => {
