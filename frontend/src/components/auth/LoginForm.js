@@ -23,12 +23,12 @@ class LoginForm extends React.Component {
     }
   }
 
-  renderInput = ({ input, label, meta }) => {
+  renderInput = ({ input, label, meta, type }) => {
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
         <label>{label}</label>
-        <input {...input} />
+        <input {...input} type={type} />
         {this.renderError(meta)}
       </div>
     );
@@ -39,18 +39,23 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    console.log(this.props.user);
     return (
       <>
         <form
           onSubmit={this.props.handleSubmit(this.onSubmit)}
           className="ui form error"
         >
-          <Field name="email" component={this.renderInput} label="Email" />
+          <Field
+            name="email"
+            component={this.renderInput}
+            label="Email"
+            type="email"
+          />
           <Field
             name="password"
             component={this.renderInput}
             label="Password"
+            type="password"
           />
           <button className="ui button primary">Login</button>
         </form>
@@ -62,6 +67,9 @@ class LoginForm extends React.Component {
               </div>
             );
           })}
+        <a href="/api/auth/accounts/google/login">
+          <button className="ui button primary">Login with Google</button>
+        </a>
         <p>Forgot Password?</p>
         <button
           onClick={() => this.onToggleResetModal()}

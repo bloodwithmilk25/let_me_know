@@ -7,9 +7,9 @@ import {
   REGISTER,
   CHANGE_PASSWORD,
   RESET_PASSWORD,
-  CLEAR_NOTIFICATIONS,
   CLEAR_ERRORS
 } from "./types";
+import { clearNotifications } from "./notifications";
 import history from "../history";
 
 export const signIn = data => async dispatch => {
@@ -26,7 +26,7 @@ export const signOut = () => dispatch => {
   authApi.post("logout/");
 
   dispatch({ type: SIGN_OUT });
-  dispatch({ type: CLEAR_NOTIFICATIONS });
+  dispatch(clearNotifications());
 };
 
 export const fetchUser = () => async dispatch => {
@@ -34,6 +34,12 @@ export const fetchUser = () => async dispatch => {
 
   dispatch({ type: FETCH_USER, payload: response.data });
 };
+
+// export const signInGoogle = () => async dispatch => {
+//   const response = await authApi.get("user/");
+//
+//   dispatch({ type: FETCH_USER, payload: response.data });
+// };
 
 export const register = data => async dispatch => {
   let error, response;

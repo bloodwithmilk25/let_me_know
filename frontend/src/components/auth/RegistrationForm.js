@@ -14,12 +14,12 @@ class RegistrationForm extends React.Component {
     }
   }
 
-  renderInput = ({ input, label, meta }) => {
+  renderInput = ({ input, label, meta, type }) => {
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
         <label>{label}</label>
-        <input {...input} autoComplete="off" />
+        <input {...input} autoComplete="off" type={type} />
         {this.renderError(meta)}
       </div>
     );
@@ -40,20 +40,31 @@ class RegistrationForm extends React.Component {
             name="first_name"
             component={this.renderInput}
             label="How would like to be called?"
+            type="text"
           />
-          <Field name="email" component={this.renderInput} label="Email*" />
+          <Field
+            name="email"
+            component={this.renderInput}
+            label="Email*"
+            type="email"
+          />
           <Field
             name="password1"
             component={this.renderInput}
             label="Password*"
+            type="password"
           />
           <Field
             name="password2"
             component={this.renderInput}
             label="Repeat Password*"
+            type="password"
           />
           <button className="ui button primary">Confirm</button>
         </form>
+        <a href="/api/auth/accounts/google/login">
+          <button className="ui button primary">Sign up with Google</button>
+        </a>
         {this.props.errors.length > 0 &&
           this.props.errors.map(e => {
             return (

@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
 
-import { createNotification } from "../actions/notifications";
-import { renderDateTimePicker } from "./DateTimePicker";
+import { createNotification } from "../../actions/notifications";
+import { renderDateTimePicker } from "../DateTimePicker";
 
 class NotificationForm extends React.Component {
   renderError({ error, touched }) {

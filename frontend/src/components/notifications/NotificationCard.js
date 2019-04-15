@@ -3,26 +3,35 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
+import Modal from "../Modal";
+import ConfirmDelete from "./ConfirmDelete";
 
 import {
   updateNotification,
   deleteNotification,
   putOnEdit,
   closeEdit
-} from "../actions/notifications";
-import { renderDateTimePicker } from "./DateTimePicker";
+} from "../../actions/notifications";
+import { renderDateTimePicker } from "../DateTimePicker";
 
 class NotificationCard extends React.Component {
-  state = { isUnderEdit: false };
+  state = { isUnderEdit: false, showDeleteModal: false };
+
+  componentDidMount() {
+    this.props.initialize(this.props.initialValues);
+  }
 
   componentDidUpdate() {
-    this.props.initialize(this.props.initialValues);
     if (
       this.props.notfUnderEdit !== this.props.notfId &&
       this.state.isUnderEdit
     ) {
       this.setState({ isUnderEdit: false });
     }
+  }
+
+  onToggleDeleteModal() {
+    this.setState({ showDeleteModal: !this.state.showDeleteModal });
   }
 
   renderError({ error, touched }) {
@@ -85,15 +94,10 @@ class NotificationCard extends React.Component {
     );
   };
 
-  onDelete = () => {
-    this.props.deleteNotification(this.props.notfId);
-  };
-
   deleteButton = () => {
-    // TODO Add a Yes/No modal prompt
     return (
       <Button
-        onClick={this.onDelete}
+        onClick={() => this.onToggleDeleteModal()}
         variant="contained"
         color="secondary"
         style={{ margin: "10px 0 0 10px" }}
@@ -105,35 +109,53 @@ class NotificationCard extends React.Component {
 
   render() {
     return (
-      <form
-        onSubmit={this.props.handleSubmit(this.onClickEditOpen)}
-        className="ui form error"
-      >
-        <Field
-          name="title"
-          component={this.renderInput}
-          label="Title"
-          disabled={!this.state.isUnderEdit}
-        />
-        <Field
-          name="content"
-          component={this.renderInput}
-          label="Content"
-          disabled={!this.state.isUnderEdit}
-        />
-        <Field
-          name="notify_on"
-          component={renderDateTimePicker}
-          label="Notify Me On"
-          disabled={!this.state.isUnderEdit}
-        />
-        <div>
-          {this.editOrDoneButton()}
-          {this.deleteButton()}
-        </div>
-        <br />
-        <br />
-      </form>
+      <>
+        <form
+          onSubmit={this.props.handleSubmit(this.onClickEditOpen)}
+          className="ui form error"
+        >
+          <Field
+            name="title"
+            component={this.renderInput}
+            label="Title"
+            disabled={!this.state.isUnderEdit}
+          />
+          <Field
+            name="content"
+            component={this.renderInput}
+            label="Content"
+            disabled={!this.state.isUnderEdit}
+          />
+          <Field
+            name="notify_on"
+            component={renderDateTimePicker}
+            label="Notify Me On"
+            disabled={!this.state.isUnderEdit}
+          />
+          <div>
+            {this.editOrDoneButton()}
+            {this.deleteButton()}
+          </div>
+          <br />
+          <br />
+        </form>
+        {this.state.showDeleteModal && (
+          <Modal
+            onCloseRequest={() => this.onToggleDeleteModal()}
+            classes={{
+              prompt: {
+                extend: "modal",
+                backgroundColor: "red"
+              }
+            }}
+          >
+            <ConfirmDelete
+              notfId={this.props.notfId}
+              close={() => this.onToggleDeleteModal()}
+            />
+          </Modal>
+        )}
+      </>
     );
   }
 }
