@@ -1,8 +1,9 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import moment from "moment";
 
-import { renderDateTimePicker } from "../DateTimePicker";
+import { renderDatePicker } from "../DateTimePicker";
 import { updateUser, fetchUser } from "../../actions/auth";
 
 class UpdateUserForm extends React.Component {
@@ -41,8 +42,16 @@ class UpdateUserForm extends React.Component {
   };
 
   onUpdateUser = formValues => {
-    console.log(formValues.date_of_birth);
-    this.props.updateUser(formValues);
+    // if it's a new date, get it to appropriate format
+    if (formValues.date_of_birth instanceof Date) {
+      const { date_of_birth: dob } = formValues;
+      const date = `${dob.getFullYear()}-${dob.getMonth() +
+        1}-${dob.getDate()}`;
+
+      this.props.updateUser({ ...formValues, date_of_birth: date });
+    } else {
+      this.props.updateUser(formValues);
+    }
   };
 
   render() {
@@ -62,14 +71,7 @@ class UpdateUserForm extends React.Component {
             component={this.renderInput}
             label="Last Name"
           />
-          <Field
-            name="date_of_birth"
-            component={renderDateTimePicker}
-            label="Date of Birth"
-            showTime={false}
-            Format={"MMM D, Y"}
-            editFormat={"MMM D, Y"}
-          />
+          <Field name="date_of_birth" component={renderDatePicker} />
           <button className="ui button primary">Save Changes</button>
         </form>
 

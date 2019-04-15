@@ -136,9 +136,9 @@ class NotificationCard extends React.Component {
             {this.editOrDoneButton()}
             {this.deleteButton()}
           </div>
-          <br />
-          <br />
         </form>
+        <br />
+        <br />
         {this.state.showDeleteModal && (
           <Modal
             onCloseRequest={() => this.onToggleDeleteModal()}
