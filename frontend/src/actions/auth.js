@@ -8,9 +8,10 @@ import {
   REGISTER,
   CHANGE_PASSWORD,
   RESET_PASSWORD,
+  CONFIRM_RESET_PASSWORD,
   CLEAR_ERRORS
 } from "./types";
-import { clearNotifications } from "./notifications";
+import { clearNotifications, delay } from "./notifications";
 import history from "../history";
 
 export const signIn = data => async dispatch => {
@@ -76,13 +77,23 @@ export const resetPassword = data => async dispatch => {
   authApi.post("password/reset/", data);
 
   dispatch({ type: RESET_PASSWORD });
+  await delay(1000); //better user expirience
   history.push("/email-was-sent");
 };
-export const confrimResetPassword = data => async dispatch => {
-  authApi.post("password/reset/confirm/", data);
 
-  dispatch({ type: RESET_PASSWORD });
-  history.push("/");
+export const confrimResetPassword = data => async dispatch => {
+  let error, response;
+  [error, response] = await to(authApi.post("password/reset/confirm/", data));
+
+  dispatch({
+    type: CONFIRM_RESET_PASSWORD,
+    payload: response ? response : error.response
+  });
+
+  await delay(1000); //better user expirience
+  if (!error) {
+    history.push("/");
+  }
 };
 
 export const clearErrors = () => {

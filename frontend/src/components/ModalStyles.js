@@ -48,7 +48,7 @@ export default {
     boxShadow: [0, 0, "0.625rem", "rgba(0, 0, 0, 0.2)"],
 
     "@media (min-width: 576px)": {
-      width: "25rem"
+      width: "40rem"
     }
   }
 };

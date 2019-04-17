@@ -12,7 +12,6 @@ const styles = theme => ({
     alignItems: "center"
   },
   wrapper: {
-    marginTop: 8,
     position: "relative"
   },
   buttonSuccess: {
@@ -69,7 +68,7 @@ class CircularIntegration extends React.Component {
               success: true,
               fail: this.props.hasErrors()
             });
-          }, 1500);
+          }, this.props.delay);
         }
       );
     }
@@ -78,7 +77,7 @@ class CircularIntegration extends React.Component {
 
   render() {
     const { loading, success, fail } = this.state;
-    const { classes } = this.props;
+    const { classes, style } = this.props;
     var buttonClassname = classNames({
       [classes.buttonSuccess]: success
     });
@@ -89,7 +88,7 @@ class CircularIntegration extends React.Component {
     }
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} style={style}>
         <div className={classes.wrapper}>
           <Button
             variant="contained"

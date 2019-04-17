@@ -28,17 +28,15 @@ class ChangePasswordForm extends React.Component {
   };
 
   onSubmit = async formValues => {
-    console.log("called");
-    this.props.changePassword(formValues);
-    const errors = await this.props.erross;
+    await this.props.changePassword(formValues);
+    const errors = this.props.errors.password;
     if (errors) {
-      console.log("passed IF");
       throw new SubmissionError({ ...errors });
     }
   };
 
   hasErrors = () => {
-    return !this.props.valid || this.props.password_errors.length > 0;
+    return !this.props.valid;
   };
 
   render() {
@@ -70,16 +68,9 @@ class ChangePasswordForm extends React.Component {
             buttonText="Change Password"
             onSubmit={this.props.handleSubmit(this.onSubmit)}
             hasErrors={this.hasErrors}
+            delay={1000}
           />
         </form>
-        {this.props.password_errors.length > 0 &&
-          this.props.password_errors.map(e => {
-            return (
-              <div className="ui error message">
-                <div className="header">{e}</div>
-              </div>
-            );
-          })}
       </>
     );
   }
@@ -98,13 +89,9 @@ const validate = formValues => {
 };
 
 const mapStateToProps = ({ user }) => {
-  const password_errors = [];
-  if (user.errors) {
-    for (var key in user.errors.password) {
-      user.errors.password[key].map(e => password_errors.push(e));
-    }
-  }
-  return { errors: user.errors.password, password_errors };
+  return {
+    errors: user.errors
+  };
 };
 
 // adding redux form

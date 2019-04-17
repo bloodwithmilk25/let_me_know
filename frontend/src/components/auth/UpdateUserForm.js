@@ -1,5 +1,5 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
 
 import { renderDatePicker } from "../DateTimePicker";
@@ -42,7 +42,8 @@ class UpdateUserForm extends React.Component {
     );
   };
 
-  // function is async so we could make use of "submitting" prop
+  // function is async so we could make use of server
+  // side validation and return errors from server
   // which is only avaliable when onSubmit returns a promise
   onUpdateUser = async formValues => {
     // if it's a new date, get it to appropriate format
@@ -55,10 +56,14 @@ class UpdateUserForm extends React.Component {
     } else {
       await this.props.updateUser(formValues);
     }
+    const errors = this.props.errors.update;
+    if (errors) {
+      throw new SubmissionError({ ...errors });
+    }
   };
 
   hasErrors = () => {
-    return !this.props.valid || this.props.update_errors.length > 0;
+    return !this.props.valid;
   };
 
   render() {
@@ -84,14 +89,6 @@ class UpdateUserForm extends React.Component {
             onSubmit={this.props.handleSubmit(this.onUpdateUser)}
             hasErrors={this.hasErrors}
           />
-          {this.props.update_errors.length > 0 &&
-            this.props.update_errors.map(e => {
-              return (
-                <div className="ui error message">
-                  <div className="header">{e}</div>
-                </div>
-              );
-            })}
         </form>
         <div style={{ marginTop: 20 }}>
           <p>Change Password:</p>
@@ -108,9 +105,9 @@ const validate = formValues => {
   if (first_name && first_name.length >= 30) {
     errors.first_name = "Your first name is too long";
   }
-  // if (last_name && last_name.length >= 30) {
-  //   errors.last_name = "Your last name is too long";
-  // }
+  if (last_name && last_name.length >= 30) {
+    errors.last_name = "Your last name is too long";
+  }
 
   if (date_of_birth && date_of_birth.length > 10) {
     errors.date_of_birth = "Use date picker to select date";
@@ -119,13 +116,10 @@ const validate = formValues => {
 };
 
 const mapStateToProps = ({ user }) => {
-  const update_errors = [];
-  if (user.errors) {
-    for (var key in user.errors.update) {
-      user.errors.update[key].map(e => update_errors.push(e));
-    }
-  }
-  return { user, update_errors };
+  return {
+    user,
+    errors: user.errors
+  };
 };
 
 const formWrapperd = reduxForm({

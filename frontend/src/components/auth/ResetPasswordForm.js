@@ -1,6 +1,8 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
+
+import ButtonLoader from "../ButtonLoader";
 import { resetPassword } from "../../actions/auth";
 
 class ResetPasswordForm extends React.Component {
@@ -24,7 +26,12 @@ class ResetPasswordForm extends React.Component {
         className="ui form"
       >
         <Field name="email" component={this.renderInput} label="Your email" />
-        <button className="ui button primary">Confirm</button>
+        <ButtonLoader
+          buttonText="Set New Password"
+          onSubmit={this.props.handleSubmit(this.onSubmit)}
+          hasErrors={this.hasErrors}
+          delay={1000}
+        />
       </form>
     );
   }

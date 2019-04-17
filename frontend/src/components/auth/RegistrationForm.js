@@ -1,6 +1,11 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
+import injectSheet from "react-jss";
+
+import styles from "./styles/RegistrationFormStyles";
+import ButtonLoader from "../ButtonLoader";
 import { register } from "../../actions/auth";
 
 class RegistrationForm extends React.Component {
@@ -25,11 +30,20 @@ class RegistrationForm extends React.Component {
     );
   };
 
-  onSubmit = formValues => {
-    this.props.register(formValues);
+  onSubmit = async formValues => {
+    await this.props.register(formValues);
+    const errors = this.props.errors;
+    if (errors) {
+      throw new SubmissionError({ ...errors });
+    }
+  };
+
+  hasErrors = () => {
+    return !this.props.valid;
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <>
         <form
@@ -60,19 +74,24 @@ class RegistrationForm extends React.Component {
             label="Repeat Password*"
             type="password"
           />
-          <button className="ui button primary">Confirm</button>
+          <div className={classes.signUpButtonContainer}>
+            <ButtonLoader
+              className={classes.signUpButton}
+              buttonText="Sign Up"
+              onSubmit={this.props.handleSubmit(this.onSubmit)}
+              hasErrors={this.hasErrors}
+              delay={1000}
+            />
+            <a
+              href="/api/auth/accounts/google/login"
+              className={classes.signUpButton}
+            >
+              <Button variant="contained" color="primary" type="button">
+                Sign Up With Google
+              </Button>
+            </a>
+          </div>
         </form>
-        <a href="/api/auth/accounts/google/login">
-          <button className="ui button primary">Sign up with Google</button>
-        </a>
-        {this.props.errors.length > 0 &&
-          this.props.errors.map(e => {
-            return (
-              <div className="ui error message">
-                <div className="header">{e}</div>
-              </div>
-            );
-          })}
       </>
     );
   }
@@ -94,18 +113,18 @@ const validate = formValues => {
 };
 
 const mapStateToProps = ({ user }) => {
-  const errors = [];
-  for (var key in user.errors) {
-    user.errors[key].map(e => errors.push(e));
-  }
-  return { errors };
+  return {
+    errors: user.errors
+  };
 };
+
+const styled = injectSheet(styles)(RegistrationForm);
 
 // adding redux form
 const formWrapperd = reduxForm({
   form: "registration",
   validate
-})(RegistrationForm);
+})(styled);
 
 // and then adding connect
 export default connect(

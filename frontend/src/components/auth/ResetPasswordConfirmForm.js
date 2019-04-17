@@ -1,7 +1,9 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
+
 import { confrimResetPassword } from "../../actions/auth";
+import ButtonLoader from "../ButtonLoader";
 
 class RegistrationForm extends React.Component {
   renderError({ error, touched }) {
@@ -25,10 +27,19 @@ class RegistrationForm extends React.Component {
     );
   };
 
-  onSubmit = formValues => {
+  onSubmit = async formValues => {
     const { uid, token } = this.props.match.params;
-    console.log({ ...formValues, uid, token });
-    this.props.confrimResetPassword({ ...formValues, uid, token });
+    await this.props.confrimResetPassword({ ...formValues, uid, token });
+    const errors = this.props.errors;
+    console.log(errors);
+    if (errors) {
+      console.log("!");
+      throw new SubmissionError({ ...errors });
+    }
+  };
+
+  hasErrors = () => {
+    return !this.props.valid;
   };
 
   render() {
@@ -40,14 +51,19 @@ class RegistrationForm extends React.Component {
         <Field
           name="new_password1"
           component={this.renderInput}
-          label="Password*"
+          label="Password"
         />
         <Field
           name="new_password2"
           component={this.renderInput}
-          label="Repeat Password*"
+          label="Repeat Password"
         />
-        <button className="ui button primary">Confirm</button>
+        <ButtonLoader
+          buttonText="Set New Password"
+          onSubmit={this.props.handleSubmit(this.onSubmit)}
+          hasErrors={this.hasErrors}
+          delay={1000}
+        />
       </form>
     );
   }
@@ -56,12 +72,15 @@ class RegistrationForm extends React.Component {
 const validate = formValues => {
   const errors = {};
   if (formValues.new_password1 !== formValues.new_password2) {
-    const message = "Your passwords does not match";
-    errors.new_password1 = message;
-    errors.new_password2 = message;
+    errors.new_password2 = "Your passwords does not match";
   }
-
   return errors;
+};
+
+const mapStateToProps = ({ user }) => {
+  return {
+    errors: user.errors
+  };
 };
 
 // adding redux form
@@ -72,6 +91,6 @@ const formWrapperd = reduxForm({
 
 // and then adding connect
 export default connect(
-  null,
+  mapStateToProps,
   { confrimResetPassword }
 )(formWrapperd);
