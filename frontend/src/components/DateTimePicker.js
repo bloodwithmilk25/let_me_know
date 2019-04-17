@@ -4,7 +4,18 @@ import momentLocalizer from "react-widgets-moment";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import "react-widgets/dist/css/react-widgets.css";
 import DatePicker from "react-datepicker";
+import { subYears } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
+
+const renderError = ({ error, touched }) => {
+  if (touched && error) {
+    return (
+      <div className="ui error message">
+        <div className="header">{error}</div>
+      </div>
+    );
+  }
+};
 
 momentLocalizer(moment);
 export const renderDateTimePicker = ({
@@ -13,7 +24,8 @@ export const renderDateTimePicker = ({
   disabled,
   Format,
   editFormat,
-  min
+  min,
+  meta
 }) => (
   <div>
     <DateTimePicker
@@ -26,7 +38,9 @@ export const renderDateTimePicker = ({
       step={30}
       min={min ? min : new Date()}
       disabled={disabled}
+      autoComplete="off"
     />
+    {renderError(meta)}
   </div>
 );
 
@@ -34,7 +48,7 @@ export const renderDatePicker = ({
   input,
   placeholder,
   defaultValue,
-  meta: { touched, error }
+  meta
 }) => (
   <div>
     <DatePicker
@@ -42,7 +56,15 @@ export const renderDatePicker = ({
       dateFormat="YYYY-MM-dd"
       selected={input.value ? new Date(input.value) : null}
       onChange={date => input.onChange(date)}
+      autoComplete="off"
+      minDate={new Date(1900, 0, 1)}
+      maxDate={subYears(new Date(), 13)}
+      placeholderText="Select your birthday"
+      peekNextMonth
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
     />
-    {touched && error && <span>{error}</span>}
+    {renderError(meta)}
   </div>
 );

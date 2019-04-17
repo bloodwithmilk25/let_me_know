@@ -87,9 +87,7 @@ const validate = formValues => {
     errors.password = "You must enter a password";
   }
   if (formValues.password1 !== formValues.password2) {
-    const message = "Your passwords does not match";
-    errors.password1 = message;
-    errors.password2 = message;
+    errors.password2 = "Your passwords does not match";
   }
 
   return errors;

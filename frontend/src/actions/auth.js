@@ -63,9 +63,13 @@ export const register = data => async dispatch => {
 };
 
 export const changePassword = data => async dispatch => {
-  await authApi.post("password/change/", data);
+  let error, response;
+  [error, response] = await to(authApi.post("password/change/", data));
 
-  dispatch({ type: CHANGE_PASSWORD });
+  dispatch({
+    type: CHANGE_PASSWORD,
+    payload: response ? response : error.response
+  });
 };
 
 export const resetPassword = data => async dispatch => {

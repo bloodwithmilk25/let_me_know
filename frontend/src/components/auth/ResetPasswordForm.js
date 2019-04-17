@@ -15,7 +15,6 @@ class ResetPasswordForm extends React.Component {
 
   onSubmit = formValues => {
     this.props.resetPassword(formValues);
-    //TODO redirect to "email was sent to you"
   };
 
   render() {

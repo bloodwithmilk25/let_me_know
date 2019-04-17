@@ -1,10 +1,11 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import moment from "moment";
 
 import { renderDatePicker } from "../DateTimePicker";
 import { updateUser, fetchUser } from "../../actions/auth";
+import ButtonLoader from "../ButtonLoader";
+import ChangePasswordForm from "./ChangePasswordForm";
 
 class UpdateUserForm extends React.Component {
   componentDidMount() {
@@ -20,8 +21,8 @@ class UpdateUserForm extends React.Component {
     }
   }
 
-  renderError({ error, touched }) {
-    if (touched && error) {
+  renderError({ error }) {
+    if (error) {
       return (
         <div className="ui error message">
           <div className="header">{error}</div>
@@ -41,17 +42,23 @@ class UpdateUserForm extends React.Component {
     );
   };
 
-  onUpdateUser = formValues => {
+  // function is async so we could make use of "submitting" prop
+  // which is only avaliable when onSubmit returns a promise
+  onUpdateUser = async formValues => {
     // if it's a new date, get it to appropriate format
     if (formValues.date_of_birth instanceof Date) {
       const { date_of_birth: dob } = formValues;
       const date = `${dob.getFullYear()}-${dob.getMonth() +
         1}-${dob.getDate()}`;
 
-      this.props.updateUser({ ...formValues, date_of_birth: date });
+      await this.props.updateUser({ ...formValues, date_of_birth: date });
     } else {
-      this.props.updateUser(formValues);
+      await this.props.updateUser(formValues);
     }
+  };
+
+  hasErrors = () => {
+    return !this.props.valid || this.props.update_errors.length > 0;
   };
 
   render() {
@@ -72,10 +79,24 @@ class UpdateUserForm extends React.Component {
             label="Last Name"
           />
           <Field name="date_of_birth" component={renderDatePicker} />
-          <button className="ui button primary">Save Changes</button>
+          <ButtonLoader
+            buttonText="Update Information"
+            onSubmit={this.props.handleSubmit(this.onUpdateUser)}
+            hasErrors={this.hasErrors}
+          />
+          {this.props.update_errors.length > 0 &&
+            this.props.update_errors.map(e => {
+              return (
+                <div className="ui error message">
+                  <div className="header">{e}</div>
+                </div>
+              );
+            })}
         </form>
-
-        <p>Change Password:</p>
+        <div style={{ marginTop: 20 }}>
+          <p>Change Password:</p>
+          <ChangePasswordForm />
+        </div>
       </>
     );
   }
@@ -83,22 +104,33 @@ class UpdateUserForm extends React.Component {
 
 const validate = formValues => {
   const errors = {};
-  if (!formValues.email) {
-    errors.email = "You must enter an email";
+  const { first_name, last_name, date_of_birth } = formValues;
+  if (first_name && first_name.length >= 30) {
+    errors.first_name = "Your first name is too long";
   }
-  if (!formValues.password) {
-    errors.password = "You must enter a password";
-  }
+  // if (last_name && last_name.length >= 30) {
+  //   errors.last_name = "Your last name is too long";
+  // }
 
+  if (date_of_birth && date_of_birth.length > 10) {
+    errors.date_of_birth = "Use date picker to select date";
+  }
   return errors;
 };
 
 const mapStateToProps = ({ user }) => {
-  return { user };
+  const update_errors = [];
+  if (user.errors) {
+    for (var key in user.errors.update) {
+      user.errors.update[key].map(e => update_errors.push(e));
+    }
+  }
+  return { user, update_errors };
 };
 
 const formWrapperd = reduxForm({
-  form: "updateUserForm"
+  form: "updateUserForm",
+  validate
 })(UpdateUserForm);
 
 export default connect(

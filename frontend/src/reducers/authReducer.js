@@ -31,11 +31,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, ...action.payload, isSignedIn: true };
 
     case UPDATE_USER:
-      console.log(action.payload);
       if (action.payload.status !== 200) {
         return {
           ...state,
-          errors: action.payload.data
+          errors: { ...state.errors, update: action.payload.data }
         };
       }
       return { ...action.payload.data, isSignedIn: true };
@@ -50,7 +49,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...action.payload.data.user, isSignedIn: true };
 
     case CHANGE_PASSWORD:
+      if (action.payload.status !== 200) {
+        return {
+          ...state,
+          errors: { ...state.errors, password: action.payload.data }
+        };
+      }
       return state;
+
     case RESET_PASSWORD:
       return state;
     case CLEAR_ERRORS:
