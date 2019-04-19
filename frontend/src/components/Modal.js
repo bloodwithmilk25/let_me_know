@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import injectSheet from "react-jss";
 import isNil from "lodash/fp/isNil";
-import styles from "./ModalStyles";
+import styles from "./styles/ModalStyles";
 import { clearErrors } from "../actions/auth";
 
 // Declaration of the component as React Class Component

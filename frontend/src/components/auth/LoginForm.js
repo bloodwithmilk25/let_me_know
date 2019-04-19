@@ -1,7 +1,12 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import injectSheet from "react-jss";
 
+import styles from "./styles/FormStyles";
+import ButtonLoader from "../ButtonLoader";
 import { signIn } from "../../actions/auth";
 import Modal from "../Modal";
 import ResetPasswordForm from "./ResetPasswordForm";
@@ -34,11 +39,26 @@ class LoginForm extends React.Component {
     );
   };
 
-  onSubmit = formValues => {
-    this.props.signIn(formValues);
+  // function is async so we could make use of server
+  // side validation and return errors from server
+  // which is only avaliable when onSubmit returns a promise
+  onSubmit = async formValues => {
+    await this.props.signIn(formValues);
+    const errors = this.props.errors;
+    if (errors) {
+      throw new SubmissionError({
+        ...errors,
+        password: errors.non_field_errors
+      });
+    }
+  };
+
+  hasErrors = () => {
+    return !this.props.valid;
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <>
         <form
@@ -57,27 +77,34 @@ class LoginForm extends React.Component {
             label="Password"
             type="password"
           />
-          <button className="ui button primary">Login</button>
+          <div className={classes.buttonContainer}>
+            <ButtonLoader
+              className={classes.button}
+              buttonText="Login"
+              onSubmit={this.props.handleSubmit(this.onSubmit)}
+              hasErrors={this.hasErrors}
+              delay={1000}
+            />
+            <a
+              href="/api/auth/accounts/google/login"
+              className={classes.button}
+            >
+              <Button variant="contained" color="primary" type="button">
+                Sign In With Google
+              </Button>
+            </a>
+          </div>
         </form>
-        {this.props.errors.length > 0 &&
-          this.props.errors.map(e => {
-            return (
-              <div className="ui error message">
-                <div className="header">{e}</div>
-              </div>
-            );
-          })}
-        <a href="/api/auth/accounts/google/login">
-          <button className="ui button primary">Login with Google</button>
-        </a>
-        <p>Forgot Password?</p>
-        <button
-          onClick={() => this.onToggleResetModal()}
-          type="button"
-          className="ui button primary"
-        >
-          Reset Password
-        </button>
+        <div className={classes.additionalButtons}>
+          <p>Forgot Password? </p>
+          <Link
+            style={{ marginLeft: 7 }}
+            className={classes.link}
+            onClick={() => this.onToggleResetModal()}
+          >
+            Reset It
+          </Link>
+        </div>
 
         {this.state.showResetModal && (
           <Modal onCloseRequest={() => this.onToggleResetModal()}>
@@ -102,18 +129,18 @@ const validate = formValues => {
 };
 
 const mapStateToProps = ({ user }) => {
-  const errors = [];
-  for (var key in user.errors) {
-    user.errors[key].map(e => errors.push(e));
-  }
-  return { errors };
+  return {
+    errors: user.errors
+  };
 };
+
+const styled = injectSheet(styles)(LoginForm);
 
 // adding redux form
 const formWrapperd = reduxForm({
   form: "login",
   validate
-})(LoginForm);
+})(styled);
 
 // and then adding connect
 export default connect(

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import injectSheet from "react-jss";
 
-import styles from "./styles/RegistrationFormStyles";
+import styles from "./styles/FormStyles";
 import ButtonLoader from "../ButtonLoader";
 import { register } from "../../actions/auth";
 
@@ -74,9 +74,9 @@ class RegistrationForm extends React.Component {
             label="Repeat Password*"
             type="password"
           />
-          <div className={classes.signUpButtonContainer}>
+          <div className={classes.buttonContainer}>
             <ButtonLoader
-              className={classes.signUpButton}
+              className={classes.button}
               buttonText="Sign Up"
               onSubmit={this.props.handleSubmit(this.onSubmit)}
               hasErrors={this.hasErrors}
@@ -84,7 +84,7 @@ class RegistrationForm extends React.Component {
             />
             <a
               href="/api/auth/accounts/google/login"
-              className={classes.signUpButton}
+              className={classes.button}
             >
               <Button variant="contained" color="primary" type="button">
                 Sign Up With Google

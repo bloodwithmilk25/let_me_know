@@ -9,13 +9,13 @@ import UpdateUserForm from "./auth/UpdateUserForm";
 import DisplayMessage from "./auth/DisplayMessage";
 import history from "../history";
 import injectSheet from "react-jss";
-import styles from "./AppStyles";
+import styles from "./styles/AppStyles";
 
-const App = () => {
+const App = props => {
   return (
-    <div>
-      <Router history={history}>
-        <Header />
+    <Router history={history}>
+      <Header />
+      <div className={props.classes.main}>
         <div className="ui container">
           <Route path="/" exact component={Auth} />
           <Route path="/" exact component={NotificationsList} />
@@ -27,8 +27,8 @@ const App = () => {
             component={ResetPasswordConfirmForm}
           />
         </div>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 };
 

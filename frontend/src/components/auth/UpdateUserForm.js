@@ -88,6 +88,7 @@ class UpdateUserForm extends React.Component {
             buttonText="Update Information"
             onSubmit={this.props.handleSubmit(this.onUpdateUser)}
             hasErrors={this.hasErrors}
+            delay={1000}
           />
         </form>
         <div style={{ marginTop: 20 }}>

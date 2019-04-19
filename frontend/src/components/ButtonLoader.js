@@ -115,4 +115,9 @@ CircularIntegration.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+CircularIntegration.defaultProps = {
+  delay: 1500,
+  hasErrors: () => false
+};
+
 export default withStyles(styles)(CircularIntegration);

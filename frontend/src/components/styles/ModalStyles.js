@@ -42,13 +42,14 @@ export default {
   // The modal window: a empty div, vertical and horizontal cenetered.
   modal: {
     width: "100%",
-    border: [35, "solid", "white"],
+    border: ["solid", "white"],
+    borderWidth: "25px 25px 15px 25px",
     borderRadius: 25,
     backgroundColor: "#fff",
     boxShadow: [0, 0, "0.625rem", "rgba(0, 0, 0, 0.2)"],
 
     "@media (min-width: 576px)": {
-      width: "40rem"
+      width: "30rem"
     }
   }
 };

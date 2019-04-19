@@ -1,9 +1,10 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import injectSheet from "react-jss";
 
+import styles from "./styles/FormStyles";
 import Button from "@material-ui/core/Button";
-
 import { createNotification } from "../../actions/notifications";
 import { renderDateTimePicker } from "../DateTimePicker";
 
@@ -47,7 +48,7 @@ class NotificationForm extends React.Component {
         <Field
           name="notify_on"
           component={renderDateTimePicker}
-          label="Notify Me On"
+          label="Notify me on"
         />
         <Button variant="contained" color="primary" type="submit">
           New Notification
@@ -75,11 +76,13 @@ const mapStateToProps = ({ user }) => {
   return { user };
 };
 
+const styled = injectSheet(styles)(NotificationForm);
+
 // adding redux form
 const formWrapperd = reduxForm({
   form: "createNotification",
   validate
-})(NotificationForm);
+})(styled);
 
 // and then adding connect
 export default connect(

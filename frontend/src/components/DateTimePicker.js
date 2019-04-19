@@ -25,9 +25,11 @@ export const renderDateTimePicker = ({
   Format,
   editFormat,
   min,
-  meta
+  meta,
+  label
 }) => (
   <div>
+    <label>{label}</label>
     <DateTimePicker
       onChange={onChange}
       editFormat={editFormat ? editFormat : "MMM D, Y H:mm"}

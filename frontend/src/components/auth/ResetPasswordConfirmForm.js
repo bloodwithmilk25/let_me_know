@@ -33,7 +33,6 @@ class RegistrationForm extends React.Component {
     const errors = this.props.errors;
     console.log(errors);
     if (errors) {
-      console.log("!");
       throw new SubmissionError({ ...errors });
     }
   };
