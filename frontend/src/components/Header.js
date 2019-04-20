@@ -12,9 +12,11 @@ class Header extends React.Component {
 
     return (
       <header>
-        <Link className={classes.logo} to="/">
-          Let me know
-        </Link>
+        <div className="effectOne">
+          <Link className={classes.logo} to="/">
+            Let me know
+          </Link>
+        </div>
         <Link to="/">User</Link>
       </header>
     );
