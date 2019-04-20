@@ -29,6 +29,7 @@ export const signOut = () => dispatch => {
 
   dispatch({ type: SIGN_OUT });
   dispatch(clearNotifications());
+  history.push("/");
 };
 
 export const fetchUser = () => async dispatch => {

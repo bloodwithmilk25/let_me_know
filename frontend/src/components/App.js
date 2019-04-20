@@ -3,7 +3,6 @@ import { Router, Route } from "react-router-dom";
 
 import NotificationsList from "./notifications/NotificationsList";
 import Header from "./Header";
-import Auth from "./auth/Auth";
 import ResetPasswordConfirmForm from "./auth/ResetPasswordConfirmForm";
 import UpdateUserForm from "./auth/UpdateUserForm";
 import DisplayMessage from "./auth/DisplayMessage";
@@ -14,10 +13,9 @@ import styles from "./styles/AppStyles";
 const App = props => {
   return (
     <Router history={history}>
-      <Header />
-      <div className={props.classes.main}>
-        <div className="ui container">
-          <Route path="/" exact component={Auth} />
+      <div className={props.classes.cont}>
+        <Header />
+        <div className={props.classes.main}>
           <Route path="/" exact component={NotificationsList} />
           <Route path="/update-user" exact component={UpdateUserForm} />
           <Route path="/email-was-sent" exact component={DisplayMessage} />

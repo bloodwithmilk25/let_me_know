@@ -38,24 +38,26 @@ class NotificationForm extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <form
-        onSubmit={this.props.handleSubmit(this.onSubmit)}
-        className="ui form error"
-      >
-        <Field name="title" component={this.renderInput} label="Title" />
-        <Field name="content" component={this.renderInput} label="Content" />
-        <Field
-          name="notify_on"
-          component={renderDateTimePicker}
-          label="Notify me on"
-        />
-        <Button variant="contained" color="primary" type="submit">
-          New Notification
-        </Button>
-        <br />
-        <br />
-      </form>
+      <div className={classes.createForm}>
+        <form
+          onSubmit={this.props.handleSubmit(this.onSubmit)}
+          className="ui form error"
+        >
+          <Field name="title" component={this.renderInput} label="Title" />
+          <Field name="content" component={this.renderInput} label="Content" />
+          <Field
+            name="notify_on"
+            component={renderDateTimePicker}
+            label="Notify me on"
+          />
+          <Button variant="contained" color="primary" type="submit">
+            New Notification
+          </Button>
+        </form>
+      </div>
     );
   }
 }

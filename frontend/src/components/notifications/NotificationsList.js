@@ -1,12 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
+import injectSheet from "react-jss";
 
+import styles from "./styles/NotificationsListStyles";
 import { fetchNotifications } from "../../actions/notifications";
 import NotificationCreate from "./NotificationCreate";
 import NotificationCard from "./NotificationCard";
 import Loader from "react-loader-spinner";
 
 class NotificationsList extends React.Component {
+  componentDidMount() {
+    this.props.fetchNotifications();
+  }
+
   componentDidUpdate() {
     if (!this.props.notifications.isFetched && this.props.user.isSignedIn) {
       this.props.fetchNotifications();
@@ -32,6 +38,8 @@ class NotificationsList extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     if (!this.props.user.isSignedIn) {
       return <h1>Login or sign up to start getting notifications</h1>;
     }
@@ -47,10 +55,10 @@ class NotificationsList extends React.Component {
       );
     }
     return (
-      <div>
+      <>
         <NotificationCreate />
-        {this.renderNotifications()}
-      </div>
+        <div className={classes.list}>{this.renderNotifications()}</div>
+      </>
     );
   }
 }
@@ -59,7 +67,9 @@ const mapStateToProps = ({ user, notifications }) => {
   return { user, notifications };
 };
 
+const styled = injectSheet(styles)(NotificationsList);
+
 export default connect(
   mapStateToProps,
   { fetchNotifications }
-)(NotificationsList);
+)(styled);

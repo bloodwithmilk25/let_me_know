@@ -8,5 +8,9 @@ export default {
       fontWeight: 700,
       textTransform: "none"
     }
+  },
+  createForm: {
+    width: "80%",
+    marginBottom: 25
   }
 };

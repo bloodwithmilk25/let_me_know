@@ -1,54 +1,89 @@
 export default {
   "@global": {
-    header: {
-      height: "6vh",
-      background: "#BCE784",
-      borderBottomLeftRadius: "10px",
-      borderBottomRightRadius: "10px"
+    "*": {
+      boxSizing: "border-box",
+      padding: "0",
+      margin: "0"
     },
-    ".effectOne > a": {
-      position: "relative"
+    ".navbar": {
+      minWidth: "100vw",
+      fontSize: "18px",
+      backgroundImage: "linear-gradient(260deg, #2376ae 0%, #c16ecf 100%)",
+      paddingBottom: 10,
+      marginBottom: 15
     },
-    ".effectOne > a:before": {
-      content: '""',
+    ".main-nav": {
+      listStyleType: "none",
+      display: "none"
+    },
+    ".nav-links": {
+      textDecoration: "none",
+      color: "rgba(255, 255, 255, 0.7)",
+      "&:hover": {
+        color: "rgba(255, 255, 255, 1)"
+      }
+    },
+    ".nav-username": {
+      textDecoration: "none",
+      color: "rgba(255, 255, 255, 0.7)"
+    },
+
+    ".logo": {
+      display: "inline-block",
+      fontSize: "22px",
+      fontWeight: 500,
+      marginTop: "10px",
+      marginLeft: "20px",
+      color: "rgba(255, 255, 255, 0.7)",
+      "&:hover": {
+        color: "rgba(255, 255, 255, 1)"
+      }
+    },
+    ".main-nav li": {
+      textAlign: "center",
+      margin: "15px auto"
+    },
+    ".navbar-toggle": {
       position: "absolute",
-      width: "100%",
-      height: 2,
-      bottom: "0",
-      margin: "-5px 0",
-      backgroundColor: "white",
-      visibility: "hidden",
-      transform: "scaleX(0)",
-      transition: "all 0.25s ease-in-out 0s"
+      top: "10px",
+      right: "20px",
+      cursor: "pointer",
+      color: "rgba(255, 255, 255, 0.7)",
+      fontSize: "24px",
+      "&:hover": {
+        color: "rgba(255, 255, 255, 1)"
+      }
     },
-    ".effectOne > a:hover:before": {
-      visibility: "visible",
-      transform: "scaleX(1)"
+    ".active": {
+      display: "block"
+    },
+    "@media screen and (min-width: 768px)": {
+      ".navbar": {
+        display: "flex",
+        justifyContent: "space-between",
+        paddingBottom: "0",
+        height: "70px",
+        alignItems: "center",
+        marginBottom: 40
+      },
+      ".main-nav": {
+        display: "flex",
+        marginRight: "30px",
+        flexDirection: "row",
+        justifyContent: "flex-end"
+      },
+      ".main-nav li": {
+        margin: "0"
+      },
+      ".nav-links": {
+        marginLeft: "40px"
+      },
+      ".logo": {
+        marginTop: "0"
+      },
+      ".navbar-toggle": {
+        display: "none"
+      }
     }
-  },
-  logo: {
-    color: ["#525174", "!important"],
-    fontWeight: 1000,
-    fontSize: "1.2em",
-    marginLeft: 20
   }
 };
-// linkHover: {
-//   position: "relative",
-//   "&:before": {
-//     content: "",
-//     position: "absolute",
-//     width: "100%",
-//     height: "2px",
-//     bottom: "0",
-//     margin: ["-5px", "0"],
-//     backgroundColor: "white",
-//     visibility: "hidden",
-//     transform: "scaleX(0)",
-//     transition: ["all", "0.4s", "ease-in-out", "0s"]
-//   },
-//   "&:hover:before": {
-//     visibility: "visible",
-//     transform: "scaleX(1)"
-//   }
-// }

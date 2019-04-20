@@ -31,20 +31,22 @@ class Auth extends React.Component {
     if (!this.props.user.isSignedIn) {
       return (
         <>
-          <button
-            onClick={() => this.onToggleLoginModal()}
-            type="button"
-            className="ui button primary"
-          >
-            Login
-          </button>
-          <button
-            onClick={() => this.onToggleRegisterModal()}
-            type="button"
-            className="ui button primary"
-          >
-            Sign Up
-          </button>
+          <li>
+            <Link
+              onClick={() => this.onToggleLoginModal()}
+              className="nav-links"
+            >
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link
+              onClick={() => this.onToggleRegisterModal()}
+              className="nav-links"
+            >
+              Sign Up
+            </Link>
+          </li>
 
           {this.state.showLoginModal && (
             <Modal onCloseRequest={() => this.onToggleLoginModal()}>
@@ -60,15 +62,21 @@ class Auth extends React.Component {
       );
     } else {
       return (
-        <div>
-          <h1>{this.props.user.email}</h1>
-          <Link to="/update-user">Update profile</Link>
-          <button onClick={this.onSignOut} className="ui button primary">
-            Sign Out
-          </button>
-          <br />
-          <br />
-        </div>
+        <>
+          <li>
+            <span className="nav-username">{this.props.user.email}</span>
+          </li>
+          <li>
+            <Link to="/update-user" className="nav-links">
+              Edit profile
+            </Link>
+          </li>
+          <li>
+            <Link onClick={this.onSignOut} className="nav-links">
+              Sign Out
+            </Link>
+          </li>
+        </>
       );
     }
   }

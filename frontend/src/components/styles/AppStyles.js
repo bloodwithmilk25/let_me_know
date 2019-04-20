@@ -1,44 +1,26 @@
 export default {
   "@global": {
     body: {
-      // fontFamily: ["Playfair Display", "serif"],
-      display: "flex",
-      margin: 0,
-      flexDirection: "column",
-      minHeight: "100vh",
-      fontSize: "22px"
-    },
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center"
-    },
-    a: {
-      "&:link": {
-        textDecoration: "inherit",
-        color: "white",
-        cursor: "pointer"
-      },
-      "&:visited": {
-        textDecoration: "inherit",
-        color: "white",
-        cursor: "auto"
-      }
+      fontFamily: '"Josefin Sans", sans-serif'
     }
+  },
+  cont: {
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100vh",
+    alignItems: "center",
+    margin: 0,
+    fontSize: "22px"
   },
   main: {
     display: "flex",
-    flexBasis: "800px"
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexWrap: "nowrap",
+    width: "80vw"
   },
   "@media all and (max-width: 640px)": {
-    main: {
-      flexDirection: "column",
-      flexGrow: 1
-    },
-    "@global": {
-      header: {
-        flexBasis: "50px"
-      }
-    }
+    "@global": {}
   }
 };

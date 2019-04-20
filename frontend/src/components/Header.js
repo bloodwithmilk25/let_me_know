@@ -2,23 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+import Auth from "./auth/Auth";
 import injectSheet from "react-jss";
-import Button from "@material-ui/core/Button";
 import styles from "./styles/HeaderStyles";
 
 class Header extends React.Component {
-  render() {
-    const { classes } = this.props;
+  state = { menuIsExpanded: false };
 
+  onToggleMenu = () => {
+    this.setState({ menuIsExpanded: !this.state.menuIsExpanded });
+  };
+
+  render() {
     return (
-      <header>
-        <div className="effectOne">
-          <Link className={classes.logo} to="/">
-            Let me know
-          </Link>
-        </div>
-        <Link to="/">User</Link>
-      </header>
+      <nav className="navbar">
+        <span onClick={this.onToggleMenu} className="navbar-toggle">
+          <i className="fas fa-bars" />
+        </span>
+        <Link to="/" className="logo">
+          letmeknow
+        </Link>
+        <ul className={`main-nav${this.state.menuIsExpanded ? " active" : ""}`}>
+          <Auth />
+        </ul>
+      </nav>
     );
   }
 }

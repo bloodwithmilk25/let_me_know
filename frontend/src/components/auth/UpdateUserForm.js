@@ -2,20 +2,28 @@ import React from "react";
 import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
 
+import history from "../../history";
 import { renderDatePicker } from "../DateTimePicker";
 import { updateUser, fetchUser } from "../../actions/auth";
 import ButtonLoader from "../ButtonLoader";
 import ChangePasswordForm from "./ChangePasswordForm";
 
 class UpdateUserForm extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     if (!this.props.user.isSignedIn) {
-      this.props.fetchUser();
+      this.getUser();
     }
     this.props.initialize(this.props.user);
   }
 
+  getUser = async () => {
+    await this.props.fetchUser();
+  };
+
   componentDidUpdate() {
+    if (!this.props.user.isSignedIn) {
+      history.push("/");
+    }
     if (this.props.pristine) {
       this.props.initialize(this.props.user);
     }

@@ -1,7 +1,9 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import injectSheet from "react-jss";
 
+import styles from "./styles/NotificationCardStyles";
 import Button from "@material-ui/core/Button";
 import Modal from "../Modal";
 import ConfirmDelete from "./ConfirmDelete";
@@ -23,8 +25,8 @@ class NotificationCard extends React.Component {
 
   componentDidUpdate() {
     if (
-      this.props.notfUnderEdit !== this.props.notfId &&
-      this.state.isUnderEdit
+      this.state.isUnderEdit &&
+      this.props.notfUnderEdit !== this.props.notfId
     ) {
       this.setState({ isUnderEdit: false });
     }
@@ -137,8 +139,6 @@ class NotificationCard extends React.Component {
             {this.deleteButton()}
           </div>
         </form>
-        <br />
-        <br />
         {this.state.showDeleteModal && (
           <Modal
             onCloseRequest={() => this.onToggleDeleteModal()}
@@ -168,10 +168,12 @@ const validate = formValues => {
   return errors;
 };
 
+const styled = injectSheet(styles)(NotificationCard);
+
 // adding redux form
 const formWrapperd = reduxForm({
   validate
-})(NotificationCard);
+})(styled);
 
 // and then adding connect
 export default connect(
