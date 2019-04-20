@@ -26,9 +26,10 @@ export const renderDateTimePicker = ({
   editFormat,
   min,
   meta,
-  label
+  label,
+  className
 }) => (
-  <div>
+  <div className={`dateTimePicker ${disabled ? "cardDisabled" : ""}`}>
     <label>{label}</label>
     <DateTimePicker
       onChange={onChange}

@@ -25,14 +25,12 @@ class NotificationsList extends React.Component {
     }
     return this.props.notifications.list.map(n => {
       return (
-        <div>
-          <NotificationCard
-            key={n.id}
-            form={`updateNotification_${n.id}`}
-            initialValues={n}
-            notfId={n.id}
-          />
-        </div>
+        <NotificationCard
+          key={n.id}
+          form={`updateNotification_${n.id}`}
+          initialValues={n}
+          notfId={n.id}
+        />
       );
     });
   };

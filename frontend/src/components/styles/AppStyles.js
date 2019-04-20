@@ -13,6 +13,7 @@ export default {
     fontSize: "22px"
   },
   main: {
+    position: "relative",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

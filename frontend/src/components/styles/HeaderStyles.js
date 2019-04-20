@@ -10,7 +10,8 @@ export default {
       fontSize: "18px",
       backgroundImage: "linear-gradient(260deg, #2376ae 0%, #c16ecf 100%)",
       paddingBottom: 10,
-      marginBottom: 15
+      marginBottom: 15,
+      boxShadow: "0 2px 3px rgba(0,0,0,0.12), 0 2px 2px rgba(0,0,0,0.24)"
     },
     ".main-nav": {
       listStyleType: "none",

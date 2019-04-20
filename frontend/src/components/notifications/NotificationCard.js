@@ -110,8 +110,10 @@ class NotificationCard extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <>
+      <div className={classes.card}>
         <form
           onSubmit={this.props.handleSubmit(this.onClickEditOpen)}
           className="ui form error"
@@ -155,7 +157,7 @@ class NotificationCard extends React.Component {
             />
           </Modal>
         )}
-      </>
+      </div>
     );
   }
 }
