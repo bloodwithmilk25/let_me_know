@@ -5,5 +5,10 @@ export default {
     justifyContent: "space-evenly",
     flexWrap: "wrap",
     marginBottom: 80
+  },
+  loaderCont: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center"
   }
 };

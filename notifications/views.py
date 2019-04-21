@@ -41,13 +41,12 @@ class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = NotificationSerializer
     permission_classes = (IsOwner,)
 
-    #@cache_page(60)
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
-    def put_patch(self, request, pk, *args, **kwargs):
-        notification = Notification.objects.get(pk=pk)
-        serializer = NotificationSerializer(notification,data=request.data, partial=True)
+    def patch(self, request, *args, **kwargs):
+        notification = Notification.objects.get(pk=kwargs["pk"])
+        serializer = NotificationSerializer(notification, data=request.data, partial=True)
         if serializer.is_valid():
             # check if user edits his notification
             new_ntfc_user_id = serializer.validated_data['user'].id
@@ -56,8 +55,6 @@ class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def patch(self, request, *args, **kwargs):
-        return self.put_patch(request, *args, **kwargs)
-
     def put(self, request, *args, **kwargs):
-        return self.put_patch(request, *args, **kwargs)
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+

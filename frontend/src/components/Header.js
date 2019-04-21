@@ -19,11 +19,17 @@ class Header extends React.Component {
         <span onClick={this.onToggleMenu} className="navbar-toggle">
           <i className="fas fa-bars" />
         </span>
-        <Link to="/" className="logo">
+        <Link
+          onClick={this.state.menuIsExpanded ? this.onToggleMenu : null}
+          to="/"
+          className="logo"
+        >
           letmeknow
         </Link>
         <ul className={`main-nav${this.state.menuIsExpanded ? " active" : ""}`}>
-          <Auth />
+          <Auth
+            closeNavbar={this.state.menuIsExpanded ? this.onToggleMenu : null}
+          />
         </ul>
       </nav>
     );

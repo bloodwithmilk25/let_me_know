@@ -1,12 +1,29 @@
 import React from "react";
 import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
+import injectSheet from "react-jss";
 
 import history from "../../history";
 import { renderDatePicker } from "../DateTimePicker";
 import { updateUser, fetchUser } from "../../actions/auth";
 import ButtonLoader from "../ButtonLoader";
 import ChangePasswordForm from "./ChangePasswordForm";
+
+const styles = {
+  list: {
+    width: "45%"
+  },
+  "@media screen and (max-width: 900px)": {
+    list: {
+      width: "70%"
+    }
+  },
+  "@media screen and (max-width: 730px)": {
+    list: {
+      width: "85%"
+    }
+  }
+};
 
 class UpdateUserForm extends React.Component {
   componentWillMount() {
@@ -76,7 +93,7 @@ class UpdateUserForm extends React.Component {
 
   render() {
     return (
-      <>
+      <div className={this.props.classes.list}>
         <form
           onSubmit={this.props.handleSubmit(this.onUpdateUser)}
           className="ui form error"
@@ -103,7 +120,7 @@ class UpdateUserForm extends React.Component {
           <p>Change Password:</p>
           <ChangePasswordForm />
         </div>
-      </>
+      </div>
     );
   }
 }
@@ -131,10 +148,12 @@ const mapStateToProps = ({ user }) => {
   };
 };
 
+const styled = injectSheet(styles)(UpdateUserForm);
+
 const formWrapperd = reduxForm({
   form: "updateUserForm",
   validate
-})(UpdateUserForm);
+})(styled);
 
 export default connect(
   mapStateToProps,

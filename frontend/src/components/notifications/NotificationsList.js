@@ -43,12 +43,8 @@ class NotificationsList extends React.Component {
     }
     if (this.props.user.isSignedIn && !this.props.notifications.isFetched) {
       return (
-        <div className="ui three column grid">
-          <div className="column" />
-          <div className="column">
-            <Loader type="Puff" color="#f50057" height={250} width={250} />
-          </div>
-          <div className="column" />
+        <div className={classes.loaderCont}>
+          <Loader type="Audio" color="#f50057" height={250} width={250} />
         </div>
       );
     }

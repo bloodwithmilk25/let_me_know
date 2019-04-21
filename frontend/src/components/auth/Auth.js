@@ -25,6 +25,7 @@ class Auth extends React.Component {
   onSignOut = () => {
     this.props.signOut();
     this.setState({ showLoginModal: false, showRegisterModal: false });
+    this.props.closeNavbar();
   };
 
   render() {
@@ -67,7 +68,11 @@ class Auth extends React.Component {
             <span className="nav-username">{this.props.user.email}</span>
           </li>
           <li>
-            <Link to="/update-user" className="nav-links">
+            <Link
+              onClick={this.props.closeNavbar}
+              to="/update-user"
+              className="nav-links"
+            >
               Edit profile
             </Link>
           </li>
