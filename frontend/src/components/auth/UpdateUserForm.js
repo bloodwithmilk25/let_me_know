@@ -110,6 +110,7 @@ class UpdateUserForm extends React.Component {
           />
           <Field name="date_of_birth" component={renderDatePicker} />
           <ButtonLoader
+            style={{ marginTop: 15 }}
             buttonText="Update Information"
             onSubmit={this.props.handleSubmit(this.onUpdateUser)}
             hasErrors={this.hasErrors}

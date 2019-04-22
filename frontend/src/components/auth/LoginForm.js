@@ -96,14 +96,16 @@ class LoginForm extends React.Component {
           </div>
         </form>
         <div className={classes.additionalButtons}>
-          <p>Forgot Password? </p>
-          <Link
-            style={{ marginLeft: 7 }}
-            className={classes.link}
-            onClick={() => this.onToggleResetModal()}
-          >
-            Reset It
-          </Link>
+          <p>
+            Forgot Password?
+            <Link
+              style={{ marginLeft: 7 }}
+              className={classes.link}
+              onClick={() => this.onToggleResetModal()}
+            >
+              Reset It
+            </Link>
+          </p>
         </div>
 
         {this.state.showResetModal && (

@@ -136,7 +136,7 @@ class NotificationCard extends React.Component {
             label="Notify Me On"
             disabled={!this.state.isUnderEdit}
           />
-          <div>
+          <div className={classes.buttonContainer}>
             {this.editOrDoneButton()}
             {this.deleteButton()}
           </div>

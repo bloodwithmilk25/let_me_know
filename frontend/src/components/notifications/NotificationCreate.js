@@ -30,11 +30,14 @@ class NotificationForm extends React.Component {
     );
   };
 
-  onSubmit = formValues => {
-    this.props.createNotification({
+  onSubmit = async formValues => {
+    await this.props.createNotification({
       ...formValues,
       user: this.props.user.id
     });
+    if (this.props.valid) {
+      this.props.reset();
+    }
   };
 
   render() {
@@ -53,7 +56,12 @@ class NotificationForm extends React.Component {
             component={renderDateTimePicker}
             label="Notify me on"
           />
-          <Button variant="contained" color="primary" type="submit">
+          <Button
+            className={classes.addButton}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
             New Notification
           </Button>
         </form>
@@ -66,6 +74,9 @@ const validate = formValues => {
   const errors = {};
   if (!formValues.title) {
     errors.title = "Notification must have a title";
+  }
+  if (!formValues.notify_on) {
+    errors.notify_on = "Notification must have a date and time";
   }
 
   return errors;

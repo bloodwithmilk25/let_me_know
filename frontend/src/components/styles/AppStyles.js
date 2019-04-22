@@ -22,6 +22,8 @@ export default {
     width: "80vw"
   },
   "@media all and (max-width: 640px)": {
-    "@global": {}
+    cont: {
+      fontSize: "0.9rem !important"
+    }
   }
 };

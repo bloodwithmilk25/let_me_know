@@ -15,7 +15,7 @@ export default {
       tapHighlightColor: "rgba(255,255,255,0)",
       lineHeight: "1.21428571em",
       padding: ".67857143em 1em",
-      fontSize: "1.5em !important",
+      fontSize: "1.2em !important",
       background: "#fff",
       border: "1px solid rgba(34,36,38,.15)",
       color: "rgba(0,0,0,.87)",
@@ -32,5 +32,8 @@ export default {
   createForm: {
     width: "80%",
     marginBottom: 25
+  },
+  addButton: {
+    marginTop: 15
   }
 };
