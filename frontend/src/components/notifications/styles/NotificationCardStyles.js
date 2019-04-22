@@ -20,6 +20,16 @@ export default {
     },
     ".dateTimePicker > div > div > input": {
       border: "none !important"
+    },
+    ".dateTimePicker.cardDisabled > div > div > input": {
+      border: "none !important",
+      cursor: "default !important"
+    },
+    ".dateTimePicker.cardDisabled > div": {
+      cursor: "default !important"
+    },
+    ".dateTimePicker.cardDisabled > div > div": {
+      cursor: "default !important"
     }
   },
   "@media screen and (max-width: 900px)": {

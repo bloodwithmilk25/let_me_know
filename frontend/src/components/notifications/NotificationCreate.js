@@ -19,8 +19,8 @@ class NotificationForm extends React.Component {
     }
   }
 
-  renderInput = ({ input, label, meta }) => {
-    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+  renderInput = ({ input, label, meta, type }) => {
+    const className = `field${meta.error && meta.touched ? " error" : ""}`;
     return (
       <div className={className}>
         <label>{label}</label>
@@ -67,9 +67,6 @@ const validate = formValues => {
   if (!formValues.title) {
     errors.title = "Notification must have a title";
   }
-  // if (!formValues.notify_on) {
-  //   errors.notify_on = "Enter time and date you want to receive notification at";
-  // }
 
   return errors;
 };
