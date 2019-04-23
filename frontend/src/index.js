@@ -10,7 +10,7 @@ import reducers from "./reducers";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducers,
-  composeEnhancers(applyMiddleware(reduxThunk))
+  composeEnhancers(applyMiddleware(reduxThunk)) // redux-thunk is essential to able to create async action creators
 );
 
 ReactDOM.render(

@@ -1,14 +1,14 @@
 import React from "react";
+import injectSheet from "react-jss";
 import { Router, Route } from "react-router-dom";
 
-import NotificationsList from "./notifications/NotificationsList";
 import Header from "./Header";
-import ResetPasswordConfirmForm from "./auth/ResetPasswordConfirmForm";
+import history from "../history";
+import styles from "./styles/AppStyles";
 import UpdateUserForm from "./auth/UpdateUserForm";
 import DisplayMessage from "./auth/DisplayMessage";
-import history from "../history";
-import injectSheet from "react-jss";
-import styles from "./styles/AppStyles";
+import NotificationsList from "./notifications/NotificationsList";
+import ResetPasswordConfirmForm from "./auth/ResetPasswordConfirmForm";
 
 const App = props => {
   return (

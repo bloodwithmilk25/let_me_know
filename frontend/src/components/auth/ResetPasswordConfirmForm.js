@@ -31,7 +31,6 @@ class RegistrationForm extends React.Component {
     const { uid, token } = this.props.match.params;
     await this.props.confrimResetPassword({ ...formValues, uid, token });
     const errors = this.props.errors;
-    console.log(errors);
     if (errors) {
       throw new SubmissionError({ ...errors });
     }
@@ -70,6 +69,9 @@ class RegistrationForm extends React.Component {
 
 const validate = formValues => {
   const errors = {};
+  if (!formValues.new_password1 || !formValues.new_password2) {
+    errors.new_password2 = "Enter password to both fields";
+  }
   if (formValues.new_password1 !== formValues.new_password2) {
     errors.new_password2 = "Your passwords does not match";
   }

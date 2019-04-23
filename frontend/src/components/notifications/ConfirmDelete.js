@@ -16,7 +16,7 @@ class ConfirmDelete extends React.Component {
           onClick={this.onDelete}
           variant="contained"
           color="secondary"
-          style={{ margin: "0 7px 0 0" }}
+          style={{ marginRight: 7 }}
         >
           Yay
         </Button>
@@ -24,7 +24,7 @@ class ConfirmDelete extends React.Component {
           onClick={this.props.close}
           variant="contained"
           color="primary"
-          style={{ margin: "0 0 0 7px" }}
+          style={{ marginLeft: 7 }}
         >
           Nay
         </Button>

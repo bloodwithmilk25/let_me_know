@@ -2,28 +2,30 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import injectSheet from "react-jss";
+import Button from "@material-ui/core/Button";
 
 import styles from "./styles/NotificationCardStyles";
-import Button from "@material-ui/core/Button";
 import Modal from "../Modal";
 import ConfirmDelete from "./ConfirmDelete";
-
+import { renderDateTimePicker } from "../DateTimePicker";
 import {
   updateNotification,
-  deleteNotification,
   putOnEdit,
   closeEdit
 } from "../../actions/notifications";
-import { renderDateTimePicker } from "../DateTimePicker";
 
 class NotificationCard extends React.Component {
   state = { isUnderEdit: false, showDeleteModal: false };
 
   componentDidMount() {
+    // set initial form values
     this.props.initialize(this.props.initialValues);
   }
 
   componentDidUpdate() {
+    // if this notification is under edit and it's ID doesn't match
+    // with notfUnderEdit from redux state, it means that some other notification
+    // is being edited and we should close edit of this one
     if (
       this.state.isUnderEdit &&
       this.props.notfUnderEdit !== this.props.notfId
@@ -142,15 +144,7 @@ class NotificationCard extends React.Component {
           </div>
         </form>
         {this.state.showDeleteModal && (
-          <Modal
-            onCloseRequest={() => this.onToggleDeleteModal()}
-            classes={{
-              prompt: {
-                extend: "modal",
-                backgroundColor: "red"
-              }
-            }}
-          >
+          <Modal onCloseRequest={() => this.onToggleDeleteModal()}>
             <ConfirmDelete
               notfId={this.props.notfId}
               close={() => this.onToggleDeleteModal()}
@@ -162,10 +156,17 @@ class NotificationCard extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return { notfUnderEdit: state.notifications.notfUnderEdit };
+};
+
 const validate = formValues => {
   const errors = {};
   if (!formValues.title) {
     errors.title = "Notification must have a title";
+  }
+  if (formValues.title && formValues.title.length > 50) {
+    errors.title = "Title must fit in 50 characters";
   }
   return errors;
 };
@@ -179,8 +180,6 @@ const formWrapperd = reduxForm({
 
 // and then adding connect
 export default connect(
-  state => ({
-    notfUnderEdit: state.notifications.notfUnderEdit
-  }),
-  { updateNotification, deleteNotification, putOnEdit, closeEdit }
+  mapStateToProps,
+  { updateNotification, putOnEdit, closeEdit }
 )(formWrapperd);

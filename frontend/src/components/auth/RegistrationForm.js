@@ -34,7 +34,7 @@ class RegistrationForm extends React.Component {
     await this.props.register(formValues);
     const errors = this.props.errors;
     if (errors) {
-      throw new SubmissionError({ ...errors });
+      throw new SubmissionError(errors);
     }
   };
 

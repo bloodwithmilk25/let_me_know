@@ -2,9 +2,9 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import injectSheet from "react-jss";
+import Button from "@material-ui/core/Button";
 
 import styles from "./styles/FormStyles";
-import Button from "@material-ui/core/Button";
 import { createNotification } from "../../actions/notifications";
 import { renderDateTimePicker } from "../DateTimePicker";
 
@@ -36,6 +36,7 @@ class NotificationForm extends React.Component {
       user: this.props.user.id
     });
     if (this.props.valid) {
+      // clear the form after the submit
       this.props.reset();
     }
   };
@@ -74,6 +75,9 @@ const validate = formValues => {
   const errors = {};
   if (!formValues.title) {
     errors.title = "Notification must have a title";
+  }
+  if (formValues.title && formValues.title.lenght > 50) {
+    errors.title = "Title must fit in 50 characters";
   }
   if (!formValues.notify_on) {
     errors.notify_on = "Notification must have a date and time";

@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import signals
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from user_api.celery import app
+from letmeknow.celery import app
 from datetime import datetime, timezone
 
 

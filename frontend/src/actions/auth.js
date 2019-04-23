@@ -38,12 +38,6 @@ export const fetchUser = () => async dispatch => {
   dispatch({ type: FETCH_USER, payload: response.data });
 };
 
-// export const signInGoogle = () => async dispatch => {
-//   const response = await authApi.get("user/");
-//
-//   dispatch({ type: FETCH_USER, payload: response.data });
-// };
-
 export const updateUser = data => async dispatch => {
   let error, response;
   [error, response] = await to(authApi.patch("user/", data));

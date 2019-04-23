@@ -5,9 +5,7 @@ import isNil from "lodash/fp/isNil";
 import styles from "./styles/ModalStyles";
 import { clearErrors } from "../actions/auth";
 
-// Declaration of the component as React Class Component
 class Modal extends Component {
-  // Init of the component before it is mounted.
   constructor(props) {
     super(props);
 
@@ -70,7 +68,6 @@ class Modal extends Component {
   }
 }
 
-// Export the component to use it in other components.
 const styledModal = injectSheet(styles)(Modal);
 
 export default connect(

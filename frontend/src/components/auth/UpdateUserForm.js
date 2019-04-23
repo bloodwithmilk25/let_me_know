@@ -92,8 +92,10 @@ class UpdateUserForm extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className={this.props.classes.list}>
+      <div className={classes.list}>
         <form
           onSubmit={this.props.handleSubmit(this.onUpdateUser)}
           className="ui form error"

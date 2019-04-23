@@ -41,37 +41,35 @@ class ChangePasswordForm extends React.Component {
 
   render() {
     return (
-      <>
-        <form
+      <form
+        onSubmit={this.props.handleSubmit(this.onSubmit)}
+        className="ui form error"
+      >
+        <Field
+          name="old_password"
+          component={this.renderInput}
+          label="Old Password"
+          type="password"
+        />
+        <Field
+          name="new_password1"
+          component={this.renderInput}
+          label="New Password"
+          type="password"
+        />
+        <Field
+          name="new_password2"
+          component={this.renderInput}
+          label="Repeat Password"
+          type="password"
+        />
+        <ButtonLoader
+          buttonText="Change Password"
           onSubmit={this.props.handleSubmit(this.onSubmit)}
-          className="ui form error"
-        >
-          <Field
-            name="old_password"
-            component={this.renderInput}
-            label="Old Password"
-            type="password"
-          />
-          <Field
-            name="new_password1"
-            component={this.renderInput}
-            label="New Password"
-            type="password"
-          />
-          <Field
-            name="new_password2"
-            component={this.renderInput}
-            label="Repeat Password"
-            type="password"
-          />
-          <ButtonLoader
-            buttonText="Change Password"
-            onSubmit={this.props.handleSubmit(this.onSubmit)}
-            hasErrors={this.hasErrors}
-            delay={1000}
-          />
-        </form>
-      </>
+          hasErrors={this.hasErrors}
+          delay={1000}
+        />
+      </form>
     );
   }
 }

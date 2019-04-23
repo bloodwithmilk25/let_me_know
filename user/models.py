@@ -29,6 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'user'
         verbose_name_plural = 'users'
 
+    @property
     def full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.
@@ -36,21 +37,22 @@ class User(AbstractBaseUser, PermissionsMixin):
         full_name = f'{self.first_name} {self.last_name}'
         return full_name.strip()
 
+    @property
     def short_name(self):
         """
         Returns the short name for the user.
         """
         return f'{self.first_name} {self.last_name[0]}'
 
+    @property
+    def is_staff(self):
+        return self.is_admin
+
     def email_user(self, subject, message, from_email=None, **kwargs):
         """
         Sends an email to this User.
         """
         send_mail(subject, message, from_email, [self.email], **kwargs)
-
-    @property
-    def is_staff(self):
-        return self.is_admin
 
 
 # set is_verified to True on my User model when confirming email with allauth view

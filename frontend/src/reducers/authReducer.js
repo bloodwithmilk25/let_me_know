@@ -38,7 +38,7 @@ export default (state = INITIAL_STATE, action) => {
           errors: { ...state.errors, update: action.payload.data }
         };
       }
-      return { ...state, ...action.payload.data, isSignedIn: true };
+      return { ...state, ...action.payload.data };
 
     case REGISTER:
       if (action.payload.status !== 201) {
