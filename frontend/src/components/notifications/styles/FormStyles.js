@@ -30,10 +30,20 @@ export default {
     }
   },
   createForm: {
-    width: "80%",
+    width: "50%",
     marginBottom: 25
   },
   addButton: {
     marginTop: 15
+  },
+  "@media screen and (max-width: 900px)": {
+    createForm: {
+      width: "65%"
+    }
+  },
+  "@media screen and (max-width: 730px)": {
+    createForm: {
+      width: "90%"
+    }
   }
 };

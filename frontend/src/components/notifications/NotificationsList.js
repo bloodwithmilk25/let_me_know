@@ -11,7 +11,9 @@ import WelcomePage from "../WelcomePage";
 
 class NotificationsList extends React.Component {
   componentDidMount() {
-    this.props.fetchNotifications();
+    if (this.props.user.isSignedIn) {
+      this.props.fetchNotifications();
+    }
   }
 
   componentDidUpdate() {

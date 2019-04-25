@@ -1,70 +1,55 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import injectSheet from "react-jss";
 
-import { toggleLoginModal, toggleRegisterModal } from "../actions/auth";
+import styles from "./styles/WelcomePageStyles";
+import LoginForm from "./auth/LoginForm";
+import RegistrationForm from "./auth/RegistrationForm";
+import Modal from "./Modal";
 
-const styles = {
-  "@global": {
-    ".navbar": {
-      margin: 0
-    },
-    body: {
-      overflowY: "hidden"
-    }
-  },
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100vw",
-    height: "100vh",
-    background: "url(bcg.jpg)",
-    backgroundRepeat: "no-repeat",
-    opacity: 0,
-    animationName: "appear",
-    animationDelay: "1s",
-    animationDuration: "1.5s",
-    animationFillMode: "forwards"
-  },
-  "@keyframes appear": {
-    from: { opacity: 0 },
-    to: { opacity: 1 }
-  },
-  message: {
-    backgroundColor: "rgba(255,255,255,0.5)",
-    padding: 30,
-    borderRadius: 15
+class WelcomePage extends React.Component {
+  state = { showLoginModal: false, showRegisterModal: false };
+
+  toggleLoginModal() {
+    this.setState({ showLoginModal: !this.state.showLoginModal });
   }
-};
 
-const renderWelcomePage = ({
-  classes,
-  dispatch,
-  toggleLoginModal,
-  toggleRegisterModal
-}) => {
-  return (
-    <div className={classes.container}>
-      <div className={classes.message}>
-        <h1>
-          Letmeknow is service that help you with your email notifications!
-        </h1>
-        <h2>
-          Just
-          <Link onClick={toggleLoginModal}> Login </Link>
-          or <Link onClick={toggleRegisterModal}>Sign Up</Link> to create your
-          first email notification
-        </h2>
-      </div>
-    </div>
-  );
-};
+  toggleRegisterModal() {
+    this.setState({ showRegisterModal: !this.state.showRegisterModal });
+  }
 
-const styled = injectSheet(styles)(renderWelcomePage);
+  render() {
+    const { classes } = this.props;
+    return (
+      <>
+        <div className={classes.container}>
+          <div className={classes.message}>
+            <h1>
+              Letmeknow is a service that will send you email notifications!
+            </h1>
+            <h2>
+              Just
+              <Link onClick={() => this.toggleLoginModal()}> Login </Link>
+              or <Link onClick={() => this.toggleRegisterModal()}>
+                Sign Up
+              </Link>{" "}
+              to create your first notification!
+            </h2>
+          </div>
+        </div>
+        {this.state.showLoginModal && (
+          <Modal onCloseRequest={() => this.toggleLoginModal()}>
+            <LoginForm />
+          </Modal>
+        )}
+        {this.state.showRegisterModal && (
+          <Modal onCloseRequest={() => this.toggleRegisterModal()}>
+            <RegistrationForm />
+          </Modal>
+        )}
+      </>
+    );
+  }
+}
 
-export default connect(
-  null,
-  { toggleLoginModal, toggleRegisterModal }
-)(styled);
+export default injectSheet(styles)(WelcomePage);

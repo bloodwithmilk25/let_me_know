@@ -1,11 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  signOut,
-  fetchUser,
-  toggleLoginModal,
-  toggleRegisterModal
-} from "../../actions/auth";
+import { signOut, fetchUser } from "../../actions/auth";
 import { Link } from "react-router-dom";
 
 import LoginForm from "./LoginForm";
@@ -13,13 +8,22 @@ import RegistrationForm from "./RegistrationForm";
 import Modal from "../Modal";
 
 class Auth extends React.Component {
+  state = { showLoginModal: false, showRegisterModal: false };
+
+  toggleLoginModal() {
+    this.setState({ showLoginModal: !this.state.showLoginModal });
+  }
+
+  toggleRegisterModal() {
+    this.setState({ showRegisterModal: !this.state.showRegisterModal });
+  }
+
   componentDidMount() {
     this.props.fetchUser();
   }
 
   onSignOut = () => {
     this.props.signOut();
-    this.setState({ showLoginModal: false, showRegisterModal: false });
     this.props.closeNavbar();
   };
 
@@ -28,29 +32,26 @@ class Auth extends React.Component {
       return (
         <>
           <li>
-            <Link
-              onClick={() => this.props.toggleLoginModal()}
-              className="nav-links"
-            >
+            <Link onClick={() => this.toggleLoginModal()} className="nav-links">
               Login
             </Link>
           </li>
           <li>
             <Link
-              onClick={() => this.props.toggleRegisterModal()}
+              onClick={() => this.toggleRegisterModal()}
               className="nav-links"
             >
               Sign Up
             </Link>
           </li>
 
-          {this.props.user.showLoginModal && (
-            <Modal onCloseRequest={() => this.props.toggleLoginModal()}>
+          {this.state.showLoginModal && (
+            <Modal onCloseRequest={() => this.toggleLoginModal()}>
               <LoginForm />
             </Modal>
           )}
-          {this.props.user.showRegisterModal && (
-            <Modal onCloseRequest={() => this.props.toggleRegisterModal()}>
+          {this.state.showRegisterModal && (
+            <Modal onCloseRequest={() => this.toggleRegisterModal()}>
               <RegistrationForm />
             </Modal>
           )}
@@ -88,5 +89,5 @@ const mapStateToProps = ({ user }) => {
 
 export default connect(
   mapStateToProps,
-  { signOut, fetchUser, toggleLoginModal, toggleRegisterModal }
+  { signOut, fetchUser }
 )(Auth);
