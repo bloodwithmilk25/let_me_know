@@ -9,7 +9,9 @@ import {
   CHANGE_PASSWORD,
   RESET_PASSWORD,
   CONFIRM_RESET_PASSWORD,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  TOGGLE_LOGIN_MODAL,
+  TOGGLE_REGISTER_MODAL
 } from "./types";
 import { clearNotifications, delay } from "./notifications";
 import history from "../history";
@@ -93,4 +95,12 @@ export const confrimResetPassword = data => async dispatch => {
 
 export const clearErrors = () => {
   return { type: CLEAR_ERRORS };
+};
+
+export const toggleLoginModal = () => {
+  return { type: TOGGLE_LOGIN_MODAL };
+};
+
+export const toggleRegisterModal = () => {
+  return { type: TOGGLE_REGISTER_MODAL };
 };

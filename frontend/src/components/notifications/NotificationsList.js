@@ -7,6 +7,7 @@ import { fetchNotifications } from "../../actions/notifications";
 import NotificationCreate from "./NotificationCreate";
 import NotificationCard from "./NotificationCard";
 import Loader from "react-loader-spinner";
+import WelcomePage from "../WelcomePage";
 
 class NotificationsList extends React.Component {
   componentDidMount() {
@@ -39,7 +40,7 @@ class NotificationsList extends React.Component {
     const { classes } = this.props;
 
     if (!this.props.user.isSignedIn) {
-      return <h1>Login or sign up to start getting notifications</h1>;
+      return <WelcomePage />;
     }
     if (this.props.user.isSignedIn && !this.props.notifications.isFetched) {
       return (
