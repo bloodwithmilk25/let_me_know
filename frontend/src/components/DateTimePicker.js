@@ -51,9 +51,12 @@ export const renderDatePicker = ({
   input,
   placeholder,
   defaultValue,
-  meta
+  meta,
+  label
 }) => (
   <div>
+    <label>{label}</label>
+    <br />
     <DatePicker
       {...input}
       dateFormat="YYYY-MM-dd"

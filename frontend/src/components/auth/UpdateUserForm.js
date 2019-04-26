@@ -110,7 +110,11 @@ class UpdateUserForm extends React.Component {
             component={this.renderInput}
             label="Last Name"
           />
-          <Field name="date_of_birth" component={renderDatePicker} />
+          <Field
+            name="date_of_birth"
+            component={renderDatePicker}
+            label="Date of birth"
+          />
           <ButtonLoader
             style={{ marginTop: 15 }}
             buttonText="Update Information"
