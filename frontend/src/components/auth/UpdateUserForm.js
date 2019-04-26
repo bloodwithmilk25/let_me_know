@@ -28,14 +28,10 @@ const styles = {
 class UpdateUserForm extends React.Component {
   componentWillMount() {
     if (!this.props.user.isSignedIn) {
-      this.getUser();
+      this.props.fetchUser();
     }
     this.props.initialize(this.props.user);
   }
-
-  getUser = async () => {
-    await this.props.fetchUser();
-  };
 
   componentDidUpdate() {
     if (!this.props.user.isSignedIn) {
