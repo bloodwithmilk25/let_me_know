@@ -113,9 +113,8 @@ class NotificationCard extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     return (
-      <div className={classes.card}>
+      <div className={`${classes.card}${this.props.sent ? " sent" : ""}`}>
         <form
           onSubmit={this.props.handleSubmit(this.onClickEditOpen)}
           className="ui form error"

@@ -25,7 +25,8 @@ class WelcomePage extends React.Component {
         <div className={classes.container}>
           <div className={classes.message}>
             <h1>
-              Letmeknow is a service that will send you email notifications!
+              <span style={{ fontWeight: 900 }}>Letmeknow</span> is a service
+              that will send you email notifications!
             </h1>
             <h2>
               Just

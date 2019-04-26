@@ -15,6 +15,9 @@ export default {
     justifyContent: "center"
   },
   "@global": {
+    ".sent": {
+      opacity: "0.5 !important"
+    },
     ".cardDisabled > div > div": {
       border: "none",
       backgroundColor: "unset !important"
