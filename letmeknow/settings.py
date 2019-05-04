@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
 
     'user',
@@ -153,8 +152,17 @@ USE_L10N = True
 USE_TZ = True
 
 # frontend
-STATIC_URL = '/static/'
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
 
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # CELERY
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 

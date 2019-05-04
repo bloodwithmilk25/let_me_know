@@ -24,7 +24,12 @@ class NotificationsList extends React.Component {
 
   renderNotifications = () => {
     if (this.props.notifications.list.length === 0) {
-      return <h3>You have no notifications yet</h3>;
+      return (
+          <div className={this.props.classes.noNotifc}>
+            <h1>You have no notifications yet =(</h1>
+            <h2>There must be something!</h2>
+          </div>
+      )
     }
     return this.props.notifications.list.map(n => {
       return (

@@ -13,7 +13,7 @@ export default {
     alignItems: "center",
     width: "100vw",
     height: "100vh",
-    background: "url(bcg.jpg)",
+    background: "url(/static/bcg.jpg)",
     backgroundRepeat: "no-repeat",
     opacity: 0,
     animationName: "appear",

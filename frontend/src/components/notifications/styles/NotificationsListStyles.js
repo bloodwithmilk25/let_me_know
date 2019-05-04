@@ -19,5 +19,12 @@ export default {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center"
-  }
+  },
+  noNotifc:{
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 35,
+}
 };
