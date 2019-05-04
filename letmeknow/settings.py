@@ -162,7 +162,7 @@ CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'somemeail@gmail.com'
-EMAIL_HOST_PASSWORD = 'somepass
+EMAIL_HOST_PASSWORD = 'somepass'
 EMAIL_PORT = 587
 
 EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
@@ -207,7 +207,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
-    }x
+    }
 }
 
 SOCIALACCOUNT_ADAPTER = 'user.adapter.SocialAccountAdapter'

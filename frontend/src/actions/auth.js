@@ -17,11 +17,12 @@ import history from "../history";
 export const signIn = data => async dispatch => {
   let error, response;
   [error, response] = await to(authApi.post("login/", data));
-
+  delay(5000);
   dispatch({
     type: SIGN_IN,
     payload: response ? response : error.response
   });
+  
 };
 
 export const signOut = () => dispatch => {
