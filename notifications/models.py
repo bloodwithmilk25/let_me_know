@@ -31,7 +31,7 @@ class Notification(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        For newly created notification we create a task and set that task's id to "create_task_id"
+        For newly created notification we create a task and set that task's id to "celery_task_id"
         For updates we check whether notify_on was changed. If it was, we discard initial task
         and create new one.
         """

@@ -1,0 +1,44 @@
+version: "3"
+services:
+  nginx:
+    image: "nginx"
+    restart: always
+    volumes:
+#      - /var/log/nginx:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./staticfiles:/static
+      - ./mediafiles:/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - web
+  web:
+    build: .
+    restart: on-failure
+    volumes:
+#      - /var/log/gunicorn:/var/log/gunicorn
+      - .:/www
+    env_file:
+      - ./.env
+    command: >
+      sh -c "python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      gunicorn --bind 0.0.0.0:8080 letmeknow.wsgi --access-logfile '/var/log/gunicorn/access.log' --error-logfile '/var/log/gunicorn/error.log'"
+
+    expose:
+      - "8000"
+
+  db:
+    image: "postgres:10.3-alpine"
+    restart: unless-stopped
+    env_file:
+      - ./.env
+#    command: >
+#      sh -c "psql &&
+#      CREATE USER ${POSTGRES_USER} WITH PASSWORD '${POSTGRES_PASSWORD}'; &&
+#      CREATE DATABASE ${POSTGRES_NAME} WITH OWNER ${POSTGRES_USER};"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
