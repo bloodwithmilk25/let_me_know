@@ -2,6 +2,8 @@ amqp==1.4.9
 anyjson==0.3.3
 billiard==3.3.0.23
 psycopg2
+gunicorn==19.6.0
+gevent
 celery==3.1.24
 certifi==2019.3.9
 chardet==3.0.4
