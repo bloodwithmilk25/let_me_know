@@ -16,6 +16,7 @@ urlpatterns = [
             TemplateView.as_view(template_name='../frontend/public/index.html'), name='password_reset_confirm'),
     re_path(r'^$', FrontendAppView.as_view()),
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # django-debug-toolbar
 if settings.DEBUG:

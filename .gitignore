@@ -7,7 +7,7 @@ frontend/node_modules
 
 # testing
 /coverage
-
+/static
 # production
 frontend/build
 

@@ -1,0 +1,27 @@
+version: '3'
+services:
+  web:
+    build: .
+    restart: on-failure
+    env_file:
+      - ./.env
+    volumes:
+      - .:/www
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+      gunicorn --bind 0.0.0.0:8080 letmeknow.wsgi"
+    ports:
+      - "8000:8080"
+    depends_on:
+      - nginx
+  db:
+    image: postgres
+  nginx:
+    image: "nginx"
+    restart: always
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./static:/static
+      - ./media:/media
+    ports:
+      - "80:80"
