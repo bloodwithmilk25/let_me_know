@@ -12,7 +12,7 @@ def send_notification(notf_id):
         email = notification.user.email
 
         if not notification.sent:
-            mail_subject = 'Your notification.'
+            mail_subject = notification.title
             message = render_to_string('notifications/notify.html', {
                 'title': notification.title,
                 'content': notification.content

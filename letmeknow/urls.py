@@ -7,7 +7,7 @@ from django.conf import settings
 from .views import FrontendAppView
 
 urlpatterns = [
-    re_path('admin/', admin.site.urls),
+    re_path('enter/', admin.site.urls),
     re_path(r'api/auth/', include('user.urls')),
     re_path(r'api/notifications/', include('notifications.urls')),
     # this view is here because we need pass uid and token to frontend in order to reset password

@@ -1,4 +1,5 @@
 import notificationsApi from "../api/notificationsApi";
+import to from "await-to-js";
 import {
   FETCH_NOTIFICATIONS,
   CREATE_NOTIFICATION,
@@ -19,9 +20,13 @@ export const fetchNotifications = () => async dispatch => {
 };
 
 export const createNotification = data => async dispatch => {
-  const response = await notificationsApi.post("/", data);
-
-  dispatch({ type: CREATE_NOTIFICATION, payload: response.data });
+  let error, response;
+  [error, response] = await to(notificationsApi.post("/", data));
+  delay(200);
+  dispatch({
+    type: CREATE_NOTIFICATION,
+    payload: response ? response : error.response
+  });
 };
 
 export const updateNotification = (id, data) => async dispatch => {

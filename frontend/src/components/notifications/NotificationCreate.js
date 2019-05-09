@@ -1,5 +1,5 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
 import injectSheet from "react-jss";
 import Button from "@material-ui/core/Button";
@@ -35,6 +35,13 @@ class NotificationForm extends React.Component {
       ...formValues,
       user: this.props.user.id
     });
+    const errors = this.props.notifications.errors;
+    if (errors) {
+      throw new SubmissionError({
+        ...errors,
+        notify_on: errors.notify_on ? "Do you have a time machine?" : null
+      });
+    }
     if (this.props.valid) {
       // clear the form after the submit
       this.props.reset();
@@ -86,8 +93,8 @@ const validate = formValues => {
   return errors;
 };
 
-const mapStateToProps = ({ user }) => {
-  return { user };
+const mapStateToProps = ({ user, notifications }) => {
+  return { user, notifications };
 };
 
 const styled = injectSheet(styles)(NotificationForm);

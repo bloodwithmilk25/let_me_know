@@ -19,7 +19,13 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_NOTIFICATIONS:
       return { ...state, list: action.payload, isFetched: true };
     case CREATE_NOTIFICATION:
-      return { ...state, list: [action.payload, ...state.list] };
+      if (action.payload.status !== 201) {
+        return {
+          ...state,
+          errors: action.payload.data
+        };
+      }
+      return { ...state, errors: null, list: [action.payload.data, ...state.list] };
     case UPDATE_NOTIFICATION:
       return {
         ...state,
