@@ -5,18 +5,18 @@ services:
     restart: always
     volumes:
       - .:/www
-    #  - /var/log/gunicorn/letmeknow/:/var/log/gunicorn/letmeknow/
+      - /var/log/gunicorn/letmeknow/:/var/log/gunicorn/letmeknow/
     env_file:
       - ./.env
     command: >
       sh -c "python manage.py makemigrations &&
       python manage.py migrate &&
       python manage.py collectstatic --noinput &&
-      gunicorn --bind 0.0.0.0:8080 letmeknow.wsgi:application --access-logfile '-' --error-logfile '-'"
-    # /var/log/gunicorn/letmeknow/error.log
+      gunicorn --bind 0.0.0.0:8080 letmeknow.wsgi:application --access-logfile /var/log/gunicorn/letmeknow/access.log --error-logfile /var/log/gunicorn/letmeknow/error.log"
+    #
     depends_on:
       - db
-#      - rabbitmq
+      - rabbitmq
   nginx:
     image: "nginx"
     restart: always
@@ -24,7 +24,7 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./static:/var/www/letmeknow/static
       - ./media:/var/www/letmeknow/media
-      #- /var/log/nginx/letmeknow/:/var/log/nginx/letmeknow/
+      - /var/log/nginx/letmeknow/:/var/log/nginx/letmeknow/
     links:
       - web
     expose:
