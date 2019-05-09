@@ -13,7 +13,6 @@ services:
       python manage.py migrate &&
       python manage.py collectstatic --noinput &&
       gunicorn --bind 0.0.0.0:8080 letmeknow.wsgi:application --access-logfile /var/log/gunicorn/letmeknow/access.log --error-logfile /var/log/gunicorn/letmeknow/error.log"
-    #
     depends_on:
       - db
       - rabbitmq
@@ -27,10 +26,8 @@ services:
       - /var/log/nginx/letmeknow/:/var/log/nginx/letmeknow/
     links:
       - web
-    expose:
-      - 80
     ports:
-      - "8000:8000"
+      - "8005:8005"
     depends_on:
       - web
   db:
