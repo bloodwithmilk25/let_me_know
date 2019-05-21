@@ -33,7 +33,6 @@ class NotificationsListView(generics.ListAPIView):
 class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     GET Notifications/:id/
-    PUT Notifications/:id/
     PATCH Notifications/:id/
     DELETE Notifications/:id/
     """
